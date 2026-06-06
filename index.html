@@ -625,18 +625,28 @@
     .testimonials-grid { grid-template-columns: 1fr; }
     .faq-grid { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
-    .hero-stats .container { gap: 0; }
-    .stat-item { min-width: 100px; padding: 0.8rem 1rem; }
     .amenities-banner { flex-direction: column; gap: 1.5rem; }
     .process-track { grid-template-columns: 1fr 1fr; }
     [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
     [style*="grid-template-columns:1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    #hero { min-height: 100vh; padding-bottom: 200px; }
+    .hero-content { padding-top: 7rem; }
+    #hero h1 { font-size: clamp(2.2rem, 8vw, 3.5rem); }
+    .hero-sub { font-size: 1rem; }
+    .hero-cta { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    .btn-ghost { width: 100%; justify-content: center; }
+    .hero-stats { bottom: 1rem; }
+    .hero-stats .container { gap: 0; flex-wrap: nowrap; overflow-x: auto; }
+    .stat-item { min-width: 90px; padding: 0.6rem 0.8rem; flex-shrink: 0; }
+    .stat-num { font-size: 1.6rem; }
+    .stat-label { font-size: 0.7rem; }
   }
 
   @media (max-width: 480px) {
     .process-track { grid-template-columns: 1fr; }
-    .hero-stats .container { justify-content: center; }
-    .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: center; }
+    .hero-stats .container { justify-content: flex-start; }
+    .stat-item { border-right: 1px solid rgba(255,255,255,0.1); border-bottom: none; text-align: center; }
+    .stat-item:last-child { border-right: none; }
   }
 </style>
 </head>
@@ -688,7 +698,7 @@
       <p class="hero-sub" data-fr="Un accompagnement sur-mesure, de A à Z, pour que vous arriviez serein·e et directement chez vous." data-en="End-to-end bespoke support, so you arrive calm, confident, and straight home.">Un accompagnement sur-mesure, de A à Z, pour que vous arriviez serein·e et directement chez vous.</p>
       <div class="hero-cta">
         <a href="#contact" class="btn-primary" data-fr="Démarrer mon projet" data-en="Start my journey">Démarrer mon projet →</a>
-        <a href="#process" class="btn-ghost" data-fr="Notre méthode" data-en="How it works">Notre méthode</a>
+        <a href="#process" class="btn-ghost" onclick="document.getElementById('process').scrollIntoView({behavior:'smooth'}); return false;" data-fr="Notre méthode" data-en="How it works">Notre méthode</a>
       </div>
     </div>
   </div>
@@ -705,10 +715,6 @@
       <div class="stat-item">
         <div class="stat-num">100%</div>
         <div class="stat-label" data-fr="Logés avant l'arrivée" data-en="Housed before arrival">Logés avant l'arrivée</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">SKEMA</div>
-        <div class="stat-label" data-fr="Grande école partenaire" data-en="Partner school">Grande école partenaire</div>
       </div>
     </div>
   </div>
