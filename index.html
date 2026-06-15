@@ -665,6 +665,7 @@
   <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
   <a href="#process" onclick="closeMobileMenu()" data-fr="Notre processus" data-en="Our Process">Notre processus</a>
   <a href="#logements" onclick="closeMobileMenu()" data-fr="Logements" data-en="Housing">Logements</a>
+  <a href="#catalogue" onclick="closeMobileMenu()" data-fr="Catalogue" data-en="Catalogue">Catalogue</a>
   <a href="#pourquoi" onclick="closeMobileMenu()" data-fr="Pourquoi nous" data-en="Why us">Pourquoi nous</a>
   <a href="#temoignages" onclick="closeMobileMenu()" data-fr="Témoignages" data-en="Testimonials">Témoignages</a>
   <a href="#contact" onclick="closeMobileMenu()" data-fr="Contact" data-en="Contact">Contact</a>
@@ -677,6 +678,7 @@
   <ul class="nav-links">
     <li><a href="#process" data-fr="Notre processus" data-en="Our Process">Notre processus</a></li>
     <li><a href="#logements" data-fr="Logements" data-en="Housing">Logements</a></li>
+    <li><a href="#catalogue" data-fr="Catalogue" data-en="Catalogue">Catalogue</a></li>
     <li><a href="#pourquoi" data-fr="Pourquoi nous" data-en="Why us">Pourquoi nous</a></li>
     <li><a href="#temoignages" data-fr="Témoignages" data-en="Testimonials">Témoignages</a></li>
     <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
@@ -976,6 +978,163 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- CATALOGUE LOGEMENTS DISPONIBLES -->
+  <div id="catalogue" style="margin-top:5rem;" class="reveal">
+    <div class="section-header" style="margin-bottom:3rem;">
+      <div class="tag" data-fr="Logements actuels" data-en="Current Properties">Logements actuels</div>
+      <h2><span data-fr="Catalogue disponible" data-en="Available catalogue">Catalogue disponible</span></h2>
+      <p data-fr="Une sélection de logements représentatifs de notre offre. Les biens indiqués peuvent avoir été loués — ils donnent une idée fidèle du standing et des prix pratiqués." data-en="A selection of properties representative of our offer. Listed properties may have been rented — they give an accurate sense of the quality and pricing.">Une sélection de logements représentatifs de notre offre. Les biens indiqués peuvent avoir été loués — ils donnent une idée fidèle du standing et des prix pratiqués.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+
+      <!-- CARD 1 : BAY CENTRAL -->
+      <div style="background:var(--navy-mid); border:1px solid rgba(184,146,74,0.2); border-radius:6px; overflow:hidden;">
+        <div style="position:relative; background:#111; height:260px; overflow:hidden;">
+          <div id="baycentral-gallery" style="display:flex; height:100%; transition:transform 0.4s ease;">
+            <img src="baycentral/exterieur.jpg" alt="Bay Central — Dubai Marina" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/chambre1.jpg" alt="Chambre — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/cuisine1.jpg" alt="Cuisine & salle à manger — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/cuisine2.jpg" alt="Cuisine ouverte — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/cuisine3.jpg" alt="Cuisine équipée — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/sejour1.jpg" alt="Séjour vue Marina — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/sejour2.jpg" alt="Séjour & cuisine — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/sdb.jpg" alt="Salle de bain — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/balcon.jpg" alt="Balcon vue Marina — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/piscine.jpg" alt="Piscine — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/gym.jpg" alt="Salle de sport — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+          </div>
+          <button onclick="bayCentralSlide(-1)" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.55);border:none;color:#C9A84C;font-size:1.1rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">‹</button>
+          <button onclick="bayCentralSlide(1)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.55);border:none;color:#C9A84C;font-size:1.1rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">›</button>
+          <div id="baycentral-counter" style="position:absolute;top:10px;left:12px;background:rgba(0,0,0,0.55);color:#C9A84C;font-size:0.65rem;font-family:'DM Sans',sans-serif;letter-spacing:0.1em;padding:3px 8px;border-radius:2px;">1 / 11</div>
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:1rem 1.25rem; background:linear-gradient(transparent,rgba(10,9,7,0.95));">
+            <div style="font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:4px;">Studio · Dubai Marina</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--white);">Bay Central <em style="color:var(--gold);">T2</em></div>
+          </div>
+          <div style="position:absolute; top:1rem; right:1rem; background:rgba(76,175,125,0.15); border:1px solid rgba(76,175,125,0.4); border-radius:2px; padding:3px 10px; font-size:0.65rem; letter-spacing:0.1em; color:#4caf7d; font-family:'DM Sans',sans-serif;">DISPONIBLE</div>
+        </div>
+        <div style="padding:1.5rem;">
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:1.5rem;">
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">Studio</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Type</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">572</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Sqft</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">1</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">SDB</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">1<sup style="font-size:0.6rem;">er</sup></div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Étage</div>
+            </div>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.5rem;">
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Clim centrale</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Piscine</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Balcon aménagé</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Parking couvert</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Salle de sport</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Meublé complet</span>
+          </div>
+          <div style="border-top:1px solid rgba(184,146,74,0.1); padding-top:1.25rem; display:flex; justify-content:space-between; align-items:flex-end;">
+            <div>
+              <div style="font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); font-family:'DM Sans',sans-serif; margin-bottom:4px;" data-fr="Loyer mensuel" data-en="Monthly rent">Loyer mensuel</div>
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--gold);">13 781 <span style="font-size:0.9rem;">AED</span></div>
+              <div style="font-size:0.7rem; color:var(--text-muted); font-family:'DM Sans',sans-serif;" data-fr="soit 110 250 AED/an" data-en="i.e. 110,250 AED/year">soit 110 250 AED/an</div>
+            </div>
+            <a href="https://wa.me/971585802766?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20studio%20Bay%20Central%20T2%20%C3%A0%20Dubai%20Marina." style="background:var(--gold); color:var(--navy); padding:0.6rem 1.2rem; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; font-family:'DM Sans',sans-serif; font-weight:500; text-decoration:none; border-radius:2px; display:flex; align-items:center; gap:6px;" data-fr="Nous contacter" data-en="Contact us">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              <span data-fr="Nous contacter" data-en="Contact us">Nous contacter</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2 : MERANO TOWER -->
+      <div style="background:var(--navy-mid); border:1px solid rgba(184,146,74,0.2); border-radius:6px; overflow:hidden;">
+        <div style="position:relative; background:#111; height:260px; overflow:hidden;">
+          <!-- GALERIE SLIDER -->
+          <div id="merano-gallery" style="display:flex; height:100%; transition:transform 0.4s ease;">
+            <img src="merano/salon1.jpg" alt="Salon vue ville — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/salon2.jpg" alt="Salon & chambre — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/salon3.jpg" alt="Séjour cuisine ouverte — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/salon4.jpg" alt="Vue d'ensemble séjour — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/cuisine1.jpg" alt="Cuisine américaine — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/cuisine2.jpg" alt="Cuisine équipée — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/chambre1.jpg" alt="Chambre vue Downtown — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/chambre2.jpg" alt="Chambre double — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/chambre3.jpg" alt="Chambre balcon — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+          </div>
+          <!-- NAVIGATION -->
+          <button onclick="meranoSlide(-1)" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.55);border:none;color:#C9A84C;font-size:1.1rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">‹</button>
+          <button onclick="meranoSlide(1)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.55);border:none;color:#C9A84C;font-size:1.1rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">›</button>
+          <!-- COUNTER -->
+          <div id="merano-counter" style="position:absolute;top:10px;left:12px;background:rgba(0,0,0,0.55);color:#C9A84C;font-size:0.65rem;font-family:'DM Sans',sans-serif;letter-spacing:0.1em;padding:3px 8px;border-radius:2px;">1 / 9</div>
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:1rem 1.25rem; background:linear-gradient(transparent,rgba(10,9,7,0.95));">
+            <div style="font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:4px;">1 Bedroom · Business Bay</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--white);">Merano <em style="color:var(--gold);">Tower</em></div>
+          </div>
+          <div style="position:absolute; top:1rem; right:1rem; background:rgba(76,175,125,0.15); border:1px solid rgba(76,175,125,0.4); border-radius:2px; padding:3px 10px; font-size:0.65rem; letter-spacing:0.1em; color:#4caf7d; font-family:'DM Sans',sans-serif;">DISPONIBLE</div>
+        </div>
+        <div style="padding:1.5rem;">
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:1.5rem;">
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">1BR</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Type</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">675</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Sqft</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">2</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">SDB</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">23<sup style="font-size:0.6rem;">e</sup></div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Étage</div>
+            </div>
+          </div>
+          <div style="background:rgba(184,146,74,0.06); border:1px solid rgba(184,146,74,0.15); border-radius:3px; padding:8px 12px; margin-bottom:1rem; display:flex; align-items:center; gap:8px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            <span style="font-size:0.7rem; color:var(--gold); font-family:'DM Sans',sans-serif; letter-spacing:0.05em;" data-fr="Vue panoramique Burj Khalifa & Downtown Dubai depuis le 23ème étage" data-en="Panoramic view of Burj Khalifa & Downtown Dubai from the 23rd floor">Vue panoramique Burj Khalifa & Downtown depuis le 23ème étage</span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.5rem;">
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Meublé complet</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Clim centrale</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Balcon vue ville</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Sécurité 24h</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Gym partagé</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Piscine DAMAC</span>
+          </div>
+          <div style="border-top:1px solid rgba(184,146,74,0.1); padding-top:1.25rem; display:flex; justify-content:space-between; align-items:flex-end;">
+            <div>
+              <div style="font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); font-family:'DM Sans',sans-serif; margin-bottom:4px;" data-fr="Loyer mensuel" data-en="Monthly rent">Loyer mensuel</div>
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--gold);">13 125 <span style="font-size:0.9rem;">AED</span></div>
+              <div style="font-size:0.7rem; color:var(--text-muted); font-family:'DM Sans',sans-serif;" data-fr="soit 105 000 AED / 8 mois" data-en="i.e. 105,000 AED / 8 months">soit 105 000 AED / 8 mois</div>
+            </div>
+            <a href="https://wa.me/971585802766?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%201BR%20Merano%20Tower%20au%2023%C3%A8me%20%C3%A9tage%20%C3%A0%20Business%20Bay." style="background:var(--gold); color:var(--navy); padding:0.6rem 1.2rem; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; font-family:'DM Sans',sans-serif; font-weight:500; text-decoration:none; border-radius:2px; display:flex; align-items:center; gap:6px;" data-fr="Nous contacter" data-en="Contact us">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              <span data-fr="Nous contacter" data-en="Contact us">Nous contacter</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div style="margin-top:1.5rem; text-align:center;">
+      <p style="font-size:0.8rem; color:var(--text-muted); font-family:'DM Sans',sans-serif; font-weight:300;" data-fr="Ces logements sont représentatifs de notre offre. Contactez-nous pour connaître les disponibilités actuelles." data-en="These properties are representative of our offer. Contact us for current availability.">Ces logements sont représentatifs de notre offre. Contactez-nous pour connaître les disponibilités actuelles.</p>
+    </div>
+  </div>
+
   </div>
 </section>
 
@@ -1368,6 +1527,24 @@
   function closeMobileMenu() {
     document.getElementById('mobileMenu').classList.remove('open');
     document.body.style.overflow = '';
+  }
+
+  // ===================== BAY CENTRAL GALLERY SLIDER =====================
+  let bayCentralIdx = 0;
+  const bayCentralTotal = 11;
+  function bayCentralSlide(dir) {
+    bayCentralIdx = (bayCentralIdx + dir + bayCentralTotal) % bayCentralTotal;
+    document.getElementById('baycentral-gallery').style.transform = `translateX(-${bayCentralIdx * 100}%)`;
+    document.getElementById('baycentral-counter').textContent = `${bayCentralIdx + 1} / ${bayCentralTotal}`;
+  }
+
+  // ===================== MERANO GALLERY SLIDER =====================
+  let meranoIdx = 0;
+  const meranoTotal = 9;
+  function meranoSlide(dir) {
+    meranoIdx = (meranoIdx + dir + meranoTotal) % meranoTotal;
+    document.getElementById('merano-gallery').style.transform = `translateX(-${meranoIdx * 100}%)`;
+    document.getElementById('merano-counter').textContent = `${meranoIdx + 1} / ${meranoTotal}`;
   }
 
   // ===================== FORM SUBMIT =====================
