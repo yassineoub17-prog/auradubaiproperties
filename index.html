@@ -1640,6 +1640,1687 @@
       btn.style.color = '';
     }, 3500);
   }
+  // ===================== LIGHTBOX =====================
+  // Collect all gallery images per property
+  const galleries = {
+    baycentral: [...document.querySelectorAll('#baycentral-gallery img')].map(i => ({ src: i.src, alt: i.alt })),
+    merano:     [...document.querySelectorAll('#merano-gallery img')].map(i => ({ src: i.src, alt: i.alt })),
+    trident:    [...document.querySelectorAll('#trident-gallery img')].map(i => ({ src: i.src, alt: i.alt })),
+  };
+
+  let lbGallery = [], lbIdx = 0;
+
+  function openLightbox(galleryKey, startIdx) {
+    lbGallery = galleries[galleryKey];
+    lbIdx = startIdx;
+    renderLightbox();
+    document.getElementById('lb-overlay').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lb-overlay').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function renderLightbox() {
+    document.getElementById('lb-img').src = lbGallery[lbIdx].src;
+    document.getElementById('lb-alt').textContent = lbGallery[lbIdx].alt;
+    document.getElementById('lb-counter').textContent = `${lbIdx + 1} / ${lbGallery.length}`;
+  }
+
+  function lbNext() { lbIdx = (lbIdx + 1) % lbGallery.length; renderLightbox(); }
+  function lbPrev() { lbIdx = (lbIdx - 1 + lbGallery.length) % lbGallery.length; renderLightbox(); }
+
+  // Keyboard nav
+  document.addEventListener('keydown', e => {
+    const lb = document.getElementById('lb-overlay');
+    if (lb.style.display !== 'flex') return;
+    if (e.key === 'ArrowRight') lbNext();
+    if (e.key === 'ArrowLeft')  lbPrev();
+    if (e.key === 'Escape')     closeLightbox();
+  });
+
+  // Make gallery images clickable
+  document.querySelectorAll('#baycentral-gallery img').forEach((img, i) => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', () => openLightbox('baycentral', i));
+  });
+  document.querySelectorAll('#merano-gallery img').forEach((img, i) => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', () => openLightbox('merano', i));
+  });
+  document.querySelectorAll('#trident-gallery img').forEach((img, i) => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', () => openLightbox('trident', i));
+  });
+</script>
+
+<!-- LIGHTBOX OVERLAY -->
+<div id="lb-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.93); z-index:9999; align-items:center; justify-content:center; flex-direction:column;">
+  <!-- Close -->
+  <button onclick="closeLightbox()" style="position:fixed; top:1.2rem; right:1.4rem; background:none; border:none; color:#C9A84C; font-size:2rem; cursor:pointer; line-height:1; z-index:10000;">✕</button>
+  <!-- Counter -->
+  <div id="lb-counter" style="position:fixed; top:1.3rem; left:50%; transform:translateX(-50%); font-size:0.7rem; letter-spacing:0.2em; color:rgba(255,255,255,0.5); font-family:'DM Sans',sans-serif;"></div>
+  <!-- Image -->
+  <div style="position:relative; display:flex; align-items:center; justify-content:center; width:100%; height:100%;">
+    <button onclick="lbPrev()" style="position:fixed; left:1rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); border:1px solid rgba(201,168,76,0.3); color:#C9A84C; font-size:1.8rem; width:48px; height:48px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">‹</button>
+    <img id="lb-img" src="" style="max-width:92vw; max-height:88vh; object-fit:contain; border-radius:3px; box-shadow:0 0 60px rgba(0,0,0,0.8);" />
+    <button onclick="lbNext()" style="position:fixed; right:1rem; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.5); border:1px solid rgba(201,168,76,0.3); color:#C9A84C; font-size:1.8rem; width:48px; height:48px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;">›</button>
+  </div>
+  <!-- Caption -->
+  <div id="lb-alt" style="position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%); font-size:0.7rem; letter-spacing:0.15em; color:rgba(255,255,255,0.4); font-family:'DM Sans',sans-serif; text-align:center; white-space:nowrap;"></div>
+  <!-- Click outside to close -->
+  <div onclick="closeLightbox()" style="position:fixed; inset:0; z-index:-1;"></div>
+</div>
+
+</body>
+</html>    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  /* TYPOGRAPHY */
+  .display { font-family: 'Cormorant Garamond', serif; }
+
+  h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; line-height: 1.15; }
+
+  /* UTILITIES */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 7rem 0; }
+  .section-sm { padding: 4rem 0; }
+
+  .gold { color: var(--gold); }
+  .italic { font-style: italic; }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.3rem 0.9rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.75s ease, transform 0.75s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ===================== NAVBAR ===================== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.3rem 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s, box-shadow 0.4s, padding 0.3s;
+  }
+  nav.scrolled {
+    background: rgba(12,11,9,0.97);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 rgba(184,146,74,0.15), 0 2px 30px rgba(0,0,0,0.5);
+    padding: 0.9rem 2rem;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--white);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+  }
+  .logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 2.2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .lang-toggle {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: none; border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 3px; padding: 0.3rem 0.6rem;
+    cursor: pointer; color: var(--gold);
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+    transition: all 0.25s;
+  }
+  .lang-toggle:hover { background: var(--gold); color: var(--navy); }
+
+  .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span {
+    display: block; width: 24px; height: 1.5px;
+    background: var(--white); transition: all 0.3s;
+  }
+
+  /* ===================== HERO ===================== */
+  #hero {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center;
+    overflow: hidden; background: var(--navy);
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      linear-gradient(150deg, rgba(12,11,9,0.95) 0%, rgba(30,26,20,0.82) 55%, rgba(12,11,9,0.93) 100%),
+      url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1800&q=80') center/cover no-repeat;
+  }
+
+  .hero-pattern {
+    position: absolute; inset: 0; z-index: 1;
+    background-image: radial-gradient(circle at 1px 1px, rgba(184,146,74,0.08) 1px, transparent 0);
+    background-size: 40px 40px;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 780px;
+  }
+
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .hero-eyebrow-line {
+    width: 40px; height: 1px; background: var(--gold);
+  }
+  .hero-eyebrow span {
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500;
+  }
+
+  #hero h1 {
+    font-size: clamp(2.8rem, 6vw, 5.2rem);
+    color: var(--white);
+    line-height: 1.08;
+    margin-bottom: 1.8rem;
+    font-weight: 400;
+  }
+  #hero h1 em { color: var(--gold); font-style: italic; }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.72);
+    max-width: 520px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  .hero-cta { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 1rem 2.2rem;
+    font-size: 0.875rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    border: none; border-radius: 3px; cursor: pointer; text-decoration: none;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .btn-primary::after {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(255,255,255,0.15);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+  }
+  .btn-primary:hover::after { transform: translateX(0); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,168,76,0.4); }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    background: transparent;
+    color: var(--white);
+    padding: 1rem 2rem;
+    font-size: 0.875rem; font-weight: 400; letter-spacing: 0.06em;
+    border: 1px solid rgba(255,255,255,0.3); border-radius: 3px;
+    cursor: pointer; text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-stats {
+    position: absolute; bottom: 3rem; left: 0; right: 0; z-index: 2;
+  }
+  .hero-stats .container {
+    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+  }
+  .stat-item {
+    padding: 1.2rem 2.5rem;
+    border-right: 1px solid rgba(255,255,255,0.12);
+    flex: 1; min-width: 140px;
+  }
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 500; color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ===================== PROCESS ===================== */
+  #process { background: var(--white); }
+
+  .section-header { text-align: center; margin-bottom: 5rem; }
+  .section-header h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-bottom: 1rem; }
+  .section-header p { color: var(--text-muted); max-width: 520px; margin: 0 auto; font-weight: 300; }
+
+  .process-track {
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    gap: 0; position: relative;
+  }
+  .process-track::before {
+    content: ''; position: absolute;
+    top: 2.5rem; left: 10%; right: 10%;
+    height: 1px; background: linear-gradient(90deg, var(--gold), rgba(201,168,76,0.2));
+    z-index: 0;
+  }
+
+  .process-step {
+    text-align: center; padding: 0 1rem; position: relative; z-index: 1;
+  }
+  .step-icon {
+    width: 5rem; height: 5rem; border-radius: 50%;
+    background: var(--cream); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    transition: all 0.35s;
+    position: relative;
+  }
+  .step-icon svg { width: 28px; height: 28px; }
+  .process-step:hover .step-icon {
+    background: var(--navy-mid); border-color: var(--gold);
+    transform: scale(1.08);
+    box-shadow: 0 10px 30px rgba(26,23,18,0.2);
+  }
+  .process-step:hover .step-icon svg path,
+  .process-step:hover .step-icon svg circle,
+  .process-step:hover .step-icon svg rect { stroke: var(--gold); }
+
+  .step-num {
+    font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .step-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 500; }
+  .step-desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; font-weight: 300; }
+
+  /* ===================== LOGEMENTS ===================== */
+  #logements { background: var(--cream); }
+
+  .amenities-banner {
+    background: var(--navy-mid);
+    border: 1px solid rgba(184,146,74,0.15);
+    border-radius: 4px;
+    padding: 1.8rem 2.5rem;
+    margin-bottom: 4rem;
+    display: flex; align-items: center; justify-content: center;
+    gap: 3rem; flex-wrap: wrap;
+  }
+  .amenities-label {
+    font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; white-space: nowrap;
+  }
+  .amenities-items { display: flex; gap: 2rem; flex-wrap: wrap; align-items: center; }
+  .amenity-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    color: rgba(255,255,255,0.85); font-size: 0.875rem;
+  }
+  .amenity-item svg { flex-shrink: 0; }
+
+  .housing-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .housing-card {
+    background: var(--white);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 4px;
+    padding: 2.5rem;
+    transition: all 0.35s;
+    position: relative; overflow: hidden;
+  }
+  .housing-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .housing-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(26,23,18,0.12); }
+  .housing-card:hover::before { transform: scaleX(1); }
+
+  .card-icon {
+    width: 3.5rem; height: 3.5rem;
+    background: var(--gold-pale); border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.8rem;
+  }
+  .card-icon svg { width: 22px; height: 22px; }
+
+  .card-type {
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.5rem; font-weight: 500;
+  }
+  .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 500; margin-bottom: 1.5rem; }
+
+  .price-list { list-style: none; margin-bottom: 1.8rem; }
+  .price-list li {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    font-size: 0.875rem; gap: 1rem;
+  }
+  .price-list li:last-child { border-bottom: none; }
+  .price-desc { color: var(--text-muted); font-weight: 300; flex: 1; }
+  .price-val { color: var(--navy); font-weight: 500; white-space: nowrap; }
+
+  .seasonal-note {
+    background: var(--gold-pale); border-radius: 3px;
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem; color: var(--text-muted);
+    display: flex; gap: 0.5rem; align-items: flex-start;
+  }
+
+  /* ===================== POURQUOI NOUS ===================== */
+  #pourquoi { background: var(--navy-mid); }
+
+  .why-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0; align-items: stretch;
+  }
+  .why-left { padding-right: 5rem; }
+  .why-left h2 { font-size: clamp(2rem, 3.5vw, 3rem); color: var(--white); margin-bottom: 1.5rem; }
+  .why-left p { color: rgba(255,255,255,0.6); font-weight: 300; max-width: 420px; margin-bottom: 2.5rem; }
+
+  .why-features { display: flex; flex-direction: column; gap: 1.5rem; }
+  .why-feature {
+    display: flex; gap: 1.2rem; align-items: flex-start;
+  }
+  .feature-dot {
+    width: 2.5rem; height: 2.5rem; border-radius: 3px;
+    background: rgba(184,146,74,0.1); border: 1px solid rgba(184,146,74,0.22);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .feature-dot svg { width: 16px; height: 16px; }
+  .feature-text h4 { color: var(--white); font-size: 0.95rem; margin-bottom: 0.3rem; }
+  .feature-text p { color: rgba(255,255,255,0.5); font-size: 0.85rem; font-weight: 300; }
+
+  .why-right {
+    border-left: 1px solid rgba(255,255,255,0.08);
+    padding-left: 5rem;
+    display: flex; align-items: center;
+  }
+
+  .trust-card {
+    background: rgba(255,252,249,0.03);
+    border: 1px solid rgba(184,146,74,0.18);
+    border-radius: 4px; padding: 2.5rem;
+    width: 100%;
+  }
+  .trust-logos {
+    display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2rem;
+  }
+  .trust-logo-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .trust-logo-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .trust-logo-badge {
+    width: 2.5rem; height: 2.5rem; border-radius: 3px;
+    background: var(--gold); display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 0.75rem; font-weight: 600;
+    color: var(--navy); flex-shrink: 0; letter-spacing: 0.05em;
+  }
+  .trust-logo-name { color: var(--white); font-size: 0.9rem; }
+  .trust-logo-sub { color: rgba(255,255,255,0.4); font-size: 0.78rem; }
+
+  .trust-stat {
+    text-align: center; padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .trust-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; color: var(--gold); line-height: 1;
+  }
+  .trust-stat-label { color: rgba(255,255,255,0.5); font-size: 0.8rem; margin-top: 0.3rem; }
+
+  /* ===================== TEMOIGNAGES ===================== */
+  #temoignages { background: var(--white); }
+
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .testimonial-card {
+    background: var(--white);
+    border: 1px solid var(--sand);
+    border-radius: 4px; padding: 2.2rem;
+    transition: all 0.3s;
+  }
+  .testimonial-card:hover { box-shadow: 0 8px 40px rgba(26,23,18,0.07); border-color: var(--sand-deep); }
+
+  .stars { display: flex; gap: 3px; margin-bottom: 1.2rem; }
+  .star { color: var(--gold); font-size: 0.9rem; }
+
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; font-style: italic; font-weight: 400;
+    color: var(--text); margin-bottom: 1.5rem; line-height: 1.5;
+  }
+
+  .testimonial-author { display: flex; align-items: center; gap: 0.9rem; }
+  .avatar {
+    width: 2.8rem; height: 2.8rem; border-radius: 3px;
+    background: var(--navy-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 500;
+    color: var(--gold); flex-shrink: 0;
+  }
+  .author-name { font-size: 0.9rem; font-weight: 500; color: var(--text); }
+  .author-info { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.1rem; }
+
+  .badge-verified {
+    margin-left: auto;
+    background: var(--gold-pale); border: 1px solid rgba(184,146,74,0.3);
+    color: #8A6A30; font-size: 0.65rem; letter-spacing: 0.12em;
+    text-transform: uppercase; padding: 0.25rem 0.6rem; border-radius: 2px;
+  }
+
+  /* ===================== FAQ ===================== */
+  #faq { background: var(--cream); }
+
+  .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; }
+
+  .faq-item {
+    background: var(--white); padding: 1.8rem 2rem;
+    cursor: pointer; transition: all 0.3s;
+    border-bottom: 1px solid var(--sand);
+  }
+  .faq-item:hover { background: var(--gold-pale); }
+
+  .faq-q {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem;
+  }
+  .faq-q-text { font-size: 0.95rem; font-weight: 500; color: var(--text); }
+  .faq-icon {
+    width: 1.5rem; height: 1.5rem; border-radius: 50%;
+    background: var(--gold-pale); border: 1px solid rgba(184,146,74,0.25);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: all 0.3s;
+  }
+  .faq-item.open .faq-icon { background: var(--gold); transform: rotate(45deg); }
+  .faq-icon svg { width: 10px; height: 10px; }
+
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+  }
+  .faq-item.open .faq-a { max-height: 300px; padding-top: 1rem; }
+  .faq-a p { color: var(--text-muted); font-size: 0.875rem; font-weight: 300; line-height: 1.7; }
+
+  /* ===================== CONTACT ===================== */
+  #contact { background: var(--navy); }
+
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+
+  .contact-left h2 { font-size: clamp(2rem, 3.5vw, 3rem); color: var(--white); margin-bottom: 1rem; }
+  .contact-left p { color: rgba(255,255,255,0.55); font-weight: 300; margin-bottom: 2.5rem; }
+
+  .contact-methods { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-method {
+    display: flex; align-items: center; gap: 1rem;
+    color: rgba(255,255,255,0.75); font-size: 0.9rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 3px; text-decoration: none;
+    transition: all 0.3s;
+  }
+  .contact-method:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.05); }
+  .contact-method svg { flex-shrink: 0; }
+
+  .form-grid { display: grid; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label {
+    font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45); font-weight: 500;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 3px; padding: 0.85rem 1rem;
+    color: var(--white); font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; outline: none; transition: border-color 0.25s;
+    width: 100%;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+  .form-group select option { background: var(--navy); color: var(--white); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .form-submit {
+    margin-top: 0.5rem;
+    width: 100%;
+    background: var(--gold); color: var(--navy);
+    border: none; border-radius: 3px;
+    padding: 1rem; font-size: 0.875rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(201,168,76,0.3); }
+
+  /* ===================== FOOTER ===================== */
+  footer {
+    background: #060504; padding: 2.5rem 0;
+    display: flex; align-items: center;
+  }
+  footer .container {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: rgba(255,255,255,0.5); }
+  .footer-logo span { color: var(--gold); }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { color: rgba(255,255,255,0.35); font-size: 0.78rem; text-decoration: none; transition: color 0.25s; }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ===================== WHATSAPP FLOAT ===================== */
+  .whatsapp-float {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 90;
+    background: #25D366; color: white;
+    width: 3.5rem; height: 3.5rem; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    transition: all 0.3s;
+  }
+  .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0 8px 30px rgba(37,211,102,0.5); }
+  .whatsapp-float svg { width: 22px; height: 22px; }
+
+  /* ===================== MOBILE NAV ===================== */
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 99;
+    background: var(--navy);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2rem;
+    transform: translateX(100%);
+    transition: transform 0.4s ease;
+  }
+  .mobile-menu.open { transform: translateX(0); }
+  .mobile-menu a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; color: var(--white);
+    text-decoration: none; transition: color 0.25s;
+  }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-close {
+    position: absolute; top: 1.5rem; right: 2rem;
+    background: none; border: none; color: var(--white);
+    font-size: 2rem; cursor: pointer;
+  }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width: 1024px) {
+    .process-track { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .process-track::before { display: none; }
+    .housing-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-grid { grid-template-columns: 1fr; }
+    .why-left { padding-right: 0; }
+    .why-right { border-left: none; padding-left: 0; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 3rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+  }
+
+  @media (max-width: 768px) {
+    .nav-links, .nav-right .btn-primary { display: none; }
+    .hamburger { display: flex; }
+    .section { padding: 5rem 0; }
+    .housing-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .faq-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .amenities-banner { flex-direction: column; gap: 1.5rem; }
+    .process-track { grid-template-columns: 1fr 1fr; }
+    [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns:1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    #hero { min-height: 100vh; padding-bottom: 200px; }
+    .hero-content { padding-top: 7rem; }
+    #hero h1 { font-size: clamp(2.2rem, 8vw, 3.5rem); }
+    .hero-sub { font-size: 1rem; }
+    .hero-cta { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+    .btn-ghost { width: 100%; justify-content: center; }
+    .hero-stats { bottom: 1rem; }
+    .hero-stats .container { gap: 0; flex-wrap: nowrap; overflow-x: auto; }
+    .stat-item { min-width: 90px; padding: 0.6rem 0.8rem; flex-shrink: 0; }
+    .stat-num { font-size: 1.6rem; }
+    .stat-label { font-size: 0.7rem; }
+  }
+
+  @media (max-width: 480px) {
+    .process-track { grid-template-columns: 1fr; }
+    .hero-stats .container { justify-content: flex-start; }
+    .stat-item { border-right: 1px solid rgba(255,255,255,0.1); border-bottom: none; text-align: center; }
+    .stat-item:last-child { border-right: none; }
+  }
+</style>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-75DV87444R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-75DV87444R');
+  </script>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="#process" onclick="closeMobileMenu()" data-fr="Notre processus" data-en="Our Process">Notre processus</a>
+  <a href="#logements" onclick="closeMobileMenu()" data-fr="Logements" data-en="Housing">Logements</a>
+  <a href="#catalogue" onclick="closeMobileMenu()" data-fr="Catalogue" data-en="Catalogue">Catalogue</a>
+  <a href="#pourquoi" onclick="closeMobileMenu()" data-fr="Pourquoi nous" data-en="Why us">Pourquoi nous</a>
+  <a href="#temoignages" onclick="closeMobileMenu()" data-fr="Témoignages" data-en="Testimonials">Témoignages</a>
+  <a href="#contact" onclick="closeMobileMenu()" data-fr="Contact" data-en="Contact">Contact</a>
+  <button class="lang-toggle" onclick="toggleLang(); closeMobileMenu();" style="font-size:1rem; padding: 0.6rem 1.5rem;" id="mobileLangBtn">EN</button>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a href="#hero" class="logo">Aura Dubai<span>Properties</span></a>
+  <ul class="nav-links">
+    <li><a href="#process" data-fr="Notre processus" data-en="Our Process">Notre processus</a></li>
+    <li><a href="#logements" data-fr="Logements" data-en="Housing">Logements</a></li>
+    <li><a href="#catalogue" data-fr="Catalogue" data-en="Catalogue">Catalogue</a></li>
+    <li><a href="#pourquoi" data-fr="Pourquoi nous" data-en="Why us">Pourquoi nous</a></li>
+    <li><a href="#temoignages" data-fr="Témoignages" data-en="Testimonials">Témoignages</a></li>
+    <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#contact" class="btn-primary" style="padding:0.65rem 1.4rem; font-size:0.78rem;" data-fr="Démarrer" data-en="Start">Démarrer</a>
+    <button class="lang-toggle" onclick="toggleLang()" id="langBtn">EN</button>
+    <div class="hamburger" onclick="openMobileMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span data-fr="Relocation étudiante & expatriés premium · Dubaï" data-en="Premium student & expat relocation · Dubai">Relocation étudiante & expatriés premium · Dubaï</span>
+      </div>
+      <h1>
+        <span data-fr="Votre logement à Dubaï,<br><em>avant même</em><br>d'atterrir." data-en="Your Dubai home,<br><em>before</em> you<br>even land.">Votre logement à Dubaï,<br><em>avant même</em><br>d'atterrir.</span>
+      </h1>
+      <p class="hero-sub" data-fr="Un accompagnement sur-mesure, de A à Z, pour que vous arriviez serein·e et directement chez vous." data-en="End-to-end bespoke support, so you arrive calm, confident, and straight home.">Un accompagnement sur-mesure, de A à Z, pour que vous arriviez serein·e et directement chez vous.</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-primary" data-fr="Démarrer mon projet" data-en="Start my journey">Démarrer mon projet →</a>
+        <a href="#process" class="btn-ghost" onclick="document.getElementById('process').scrollIntoView({behavior:'smooth'}); return false;" data-fr="Notre méthode" data-en="How it works">Notre méthode</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="container">
+      <div class="stat-item">
+        <div class="stat-label" data-fr="Clients accompagnés" data-en="Clients supported">Clients accompagnés</div>
+        <div class="stat-num">+150</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label" data-fr="Fondé en" data-en="Founded in">Fondé en</div>
+        <div class="stat-num">2025</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-label" data-fr="Logés avant l'arrivée" data-en="Housed before arrival">Logés avant l'arrivée</div>
+        <div class="stat-num">100%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag" data-fr="Notre méthode" data-en="Our Method">Notre méthode</div>
+      <h2><span data-fr="Cinq étapes, zéro stress" data-en="Five steps, zero stress">Cinq étapes, zéro stress</span></h2>
+      <p data-fr="Nous gérons tout, de votre premier message jusqu'à votre première nuit à Dubaï." data-en="We handle everything, from your first message to your first night in Dubai.">Nous gérons tout, de votre premier message jusqu'à votre première nuit à Dubaï.</p>
+    </div>
+    <div class="process-track">
+      <div class="process-step reveal reveal-delay-1">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.19 7.82a19.79 19.79 0 01-3.07-8.72A2 2 0 013.1 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.09 9.91A16 16 0 0016 18.82l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0124 19.92"/>
+          </svg>
+        </div>
+        <div class="step-num" data-fr="Étape 01" data-en="Step 01">Étape 01</div>
+        <div class="step-title" data-fr="Appel découverte" data-en="Discovery call">Appel découverte</div>
+        <div class="step-desc" data-fr="On apprend à vous connaître : école, budget, style de vie, date d'arrivée." data-en="We learn about you: school, budget, lifestyle, arrival date.">On apprend à vous connaître : école, budget, style de vie, date d'arrivée.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 13h4"/>
+          </svg>
+        </div>
+        <div class="step-num" data-fr="Étape 02" data-en="Step 02">Étape 02</div>
+        <div class="step-title" data-fr="Sélection des logements" data-en="Property selection">Sélection des logements</div>
+        <div class="step-desc" data-fr="Nous sélectionnons 3 à 5 options qui vous correspondent, vérifiées et filtrées." data-en="We shortlist 3–5 options matching your profile, all verified and pre-screened.">Nous sélectionnons 3 à 5 options qui vous correspondent, vérifiées et filtrées.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 10l5-5m0 0l-5-5m5 5H4"/>
+            <circle cx="10" cy="17" r="3"/><path d="M13 17h7"/>
+          </svg>
+        </div>
+        <div class="step-num" data-fr="Étape 03" data-en="Step 03">Étape 03</div>
+        <div class="step-title" data-fr="Visites virtuelles" data-en="Virtual tours">Visites virtuelles</div>
+        <div class="step-desc" data-fr="Visites vidéo en temps réel ou enregistrées, avec notre équipe sur place à Dubaï." data-en="Live video tours or pre-recorded walkthroughs, with our team on the ground in Dubai.">Visites vidéo en temps réel ou enregistrées, avec notre équipe sur place à Dubaï.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12l2 2 4-4"/><path d="M20 12a8 8 0 11-16 0 8 8 0 0116 0z"/>
+          </svg>
+        </div>
+        <div class="step-num" data-fr="Étape 04" data-en="Step 04">Étape 04</div>
+        <div class="step-title" data-fr="Réservation" data-en="Booking">Réservation</div>
+        <div class="step-desc" data-fr="Nous négocions et finalisons le bail à votre place. Signature sécurisée à distance." data-en="We negotiate and finalize the lease on your behalf. Secure remote signing.">Nous négocions et finalisons le bail à votre place. Signature sécurisée à distance.</div>
+      </div>
+      <div class="process-step reveal reveal-delay-3">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <div class="step-num" data-fr="Étape 05" data-en="Step 05">Étape 05</div>
+        <div class="step-title" data-fr="Installation à Dubaï" data-en="Moving in Dubai">Installation à Dubaï</div>
+        <div class="step-desc" data-fr="Accueil, remise des clés, conseils pratiques. Vous êtes chez vous dès le premier jour." data-en="Welcome, key handover, practical tips. You're home from day one.">Accueil, remise des clés, conseils pratiques. Vous êtes chez vous dès le premier jour.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGEMENTS -->
+<section id="logements" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag" data-fr="Nos logements" data-en="Our Properties">Nos logements</div>
+      <h2><span data-fr="Trouvez votre espace idéal" data-en="Find your ideal space">Trouvez votre espace idéal</span></h2>
+      <p data-fr="Des options pour chaque profil et chaque budget, dans les quartiers les plus prisés de Dubaï." data-en="Options for every profile and budget, in Dubai's most sought-after neighbourhoods.">Des options pour chaque profil et chaque budget, dans les quartiers les plus prisés de Dubaï.</p>
+    </div>
+
+    <!-- AMENITIES BANNER -->
+    <div class="amenities-banner reveal">
+      <div class="amenities-label" data-fr="Tous nos logements incluent :" data-en="All properties include:">Tous nos logements incluent :</div>
+      <div class="amenities-items">
+        <div class="amenity-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 22a10 10 0 100-20 10 10 0 000 20z"/><path d="M12 8v4l3 3"/>
+          </svg>
+          <span data-fr="Eau & Électricité" data-en="Water & Electricity">Eau & Électricité</span>
+        </div>
+        <div class="amenity-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round">
+            <path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>
+          </svg>
+          <span>WiFi</span>
+        </div>
+        <div class="amenity-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round">
+            <path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+          </svg>
+          <span data-fr="Salle de sport" data-en="Gym">Salle de sport</span>
+        </div>
+        <div class="amenity-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round">
+            <path d="M3 17h18M4 17V7a1 1 0 011-1h14a1 1 0 011 1v10M8 17v-6m8 6v-6m-4 6V8"/>
+          </svg>
+          <span data-fr="Piscine" data-en="Pool">Piscine</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="housing-grid">
+      <!-- COLOCATION -->
+      <div class="housing-card reveal reveal-delay-1">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        <div class="card-type" data-fr="Colocation" data-en="Shared Housing">Colocation</div>
+        <div class="card-title" data-fr="Chambre en coloc'" data-en="Room in shared flat">Chambre en coloc'</div>
+        <ul class="price-list">
+          <li>
+            <span class="price-desc" data-fr="Chambre avec salle de bain partagée" data-en="Room with shared bathroom">Chambre avec salle de bain partagée</span>
+            <span class="price-val">3 000 AED/mois</span>
+          </li>
+          <li>
+            <span class="price-desc" data-fr="Chambre double avec SDB privée" data-en="Twin room with private bathroom">Chambre double avec SDB privée</span>
+            <span class="price-val">5 000 AED/mois</span>
+          </li>
+          <li>
+            <span class="price-desc" data-fr="Chambre simple avec SDB privée" data-en="Single room with private bathroom">Chambre simple avec SDB privée</span>
+            <span class="price-val">5 500 – 6 500 AED/mois</span>
+          </li>
+        </ul>
+        <div class="seasonal-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" style="flex-shrink:0; margin-top:1px"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span data-fr="Option idéale pour maîtriser son budget, tout en restant dans des résidences premium." data-en="Ideal option to manage costs while staying in premium residences.">Option idéale pour maîtriser son budget, tout en restant dans des résidences premium.</span>
+        </div>
+      </div>
+
+      <!-- STUDIO -->
+      <div class="housing-card reveal reveal-delay-2">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M3 9h18M9 21V9"/>
+          </svg>
+        </div>
+        <div class="card-type">Studio</div>
+        <div class="card-title" data-fr="Studio indépendant" data-en="Independent studio">Studio indépendant</div>
+        <ul class="price-list">
+          <li>
+            <span class="price-desc" data-fr="Septembre à décembre" data-en="September to December">Septembre à décembre</span>
+            <span class="price-val">dès 8 000 AED/mois</span>
+          </li>
+          <li>
+            <span class="price-desc" data-fr="À partir de janvier" data-en="From January onwards">À partir de janvier</span>
+            <span class="price-val">dès 10 000 AED/mois</span>
+          </li>
+        </ul>
+        <div class="seasonal-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" style="flex-shrink:0; margin-top:1px"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span data-fr="Les prix de sept. à déc. sont plus attractifs (entrée de saison). Après janvier, la haute saison fait monter les loyers. Réservez tôt pour sécuriser le meilleur tarif." data-en="Sept–Dec prices are more attractive (start of season). From January, high season pushes rents up. Book early to lock in the best rate.">Les prix de sept. à déc. sont plus attractifs (entrée de saison). Après janvier, la haute saison fait monter les loyers. Réservez tôt pour sécuriser le meilleur tarif.</span>
+        </div>
+      </div>
+
+      <!-- 1 BEDROOM -->
+      <div class="housing-card reveal reveal-delay-3">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+        </div>
+        <div class="card-type" data-fr="Appartement" data-en="Apartment">Appartement</div>
+        <div class="card-title">1 Bedroom</div>
+        <ul class="price-list">
+          <li>
+            <span class="price-desc" data-fr="Septembre à décembre" data-en="September to December">Septembre à décembre</span>
+            <span class="price-val">~10 000 AED/mois</span>
+          </li>
+          <li>
+            <span class="price-desc" data-fr="À partir de janvier" data-en="From January onwards">À partir de janvier</span>
+            <span class="price-val">13 000 – 14 000 AED/mois</span>
+          </li>
+        </ul>
+        <div class="seasonal-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" style="flex-shrink:0; margin-top:1px"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span data-fr="Idéal pour couple ou étudiant souhaitant plus d'espace et d'indépendance à Dubaï." data-en="Ideal for couples or students wanting more space and independence in Dubai.">Idéal pour couple ou étudiant souhaitant plus d'espace et d'indépendance à Dubaï.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEASONAL & CONTRACT EXPLAINER -->
+    <div style="margin-top:4rem; display:grid; grid-template-columns:1fr 1fr; gap:2rem;" class="reveal">
+      <div style="background:var(--white); border:1px solid rgba(201,168,74,0.15); border-radius:4px; padding:2.5rem; position:relative; overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));"></div>
+        <div class="card-type" data-fr="Comprendre les saisons" data-en="Understanding seasons">Comprendre les saisons</div>
+        <div class="card-title" style="font-size:1.4rem; margin-bottom:1.5rem;" data-fr="Haute vs basse saison" data-en="High vs low season">Haute vs basse saison</div>
+        <div style="display:flex; flex-direction:column; gap:1rem;">
+          <div style="background:var(--cream); border-radius:3px; padding:1.2rem 1.5rem;">
+            <div style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:0.5rem;" data-fr="Haute saison · Octobre – Avril" data-en="High season · October – April">Haute saison · Octobre – Avril</div>
+            <div style="font-size:0.875rem; color:var(--text-muted); font-weight:300;" data-fr="Période la plus demandée : le climat est agréable (15–25°C), la ville est animée, les expatriés arrivent en masse. Les prix sont plus élevés et les biens partent vite. Anticipez votre recherche 2 à 3 mois avant." data-en="The most in-demand period: pleasant weather (15–25°C), the city is buzzing, expats arrive in numbers. Prices are higher and properties go fast. Plan your search 2–3 months ahead.">Période la plus demandée : le climat est agréable (15–25°C), la ville est animée, les expatriés arrivent en masse. Les prix sont plus élevés et les biens partent vite. Anticipez votre recherche 2 à 3 mois avant.</div>
+          </div>
+          <div style="background:var(--cream); border-radius:3px; padding:1.2rem 1.5rem;">
+            <div style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:#5A8A6A; font-weight:500; margin-bottom:0.5rem;" data-fr="Basse saison · Mai – Août" data-en="Low season · May – August">Basse saison · Mai – Août</div>
+            <div style="font-size:0.875rem; color:var(--text-muted); font-weight:300;" data-fr="La chaleur extrême (40°C+) réduit la demande. Les propriétaires sont plus ouverts à la négociation, les tarifs sont plus attractifs et les disponibilités plus larges. Le meilleur moment pour signer un bon contrat." data-en="Extreme heat (40°C+) reduces demand. Landlords are more open to negotiation, rates are more attractive and availability is greater. The best time to lock in a good deal.">La chaleur extrême (40°C+) réduit la demande. Les propriétaires sont plus ouverts à la négociation, les tarifs sont plus attractifs et les disponibilités plus larges. Le meilleur moment pour signer un bon contrat.</div>
+          </div>
+          <div style="background:var(--cream); border-radius:3px; padding:1.2rem 1.5rem;">
+            <div style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:#8A7A5A; font-weight:500; margin-bottom:0.5rem;" data-fr="Rentrée · Septembre" data-en="Back-to-school · September">Rentrée · Septembre</div>
+            <div style="font-size:0.875rem; color:var(--text-muted); font-weight:300;" data-fr="Période charnière : forte demande liée à la rentrée scolaire et universitaire. Les logements proches des campus partent rapidement. Idéalement, réservez dès juin-juillet pour la rentrée de septembre." data-en="A pivotal period: high demand driven by the academic year start. Properties near campuses go quickly. Ideally, book as early as June–July for a September move-in.">Période charnière : forte demande liée à la rentrée scolaire et universitaire. Les logements proches des campus partent rapidement. Idéalement, réservez dès juin-juillet pour la rentrée de septembre.</div>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--white); border:1px solid rgba(201,168,74,0.15); border-radius:4px; padding:2.5rem; position:relative; overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));"></div>
+        <div class="card-type" data-fr="Type de contrat" data-en="Contract type">Type de contrat</div>
+        <div class="card-title" style="font-size:1.4rem; margin-bottom:1.5rem;" data-fr="Annuel vs mensuel" data-en="Yearly vs monthly">Annuel vs mensuel</div>
+        <div style="display:flex; flex-direction:column; gap:1rem;">
+          <div style="background:var(--cream); border-radius:3px; padding:1.2rem 1.5rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+              <div style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); font-weight:500;" data-fr="Contrat mensuel (Monthly)" data-en="Monthly contract">Contrat mensuel (Monthly)</div>
+              <div style="font-size:0.72rem; background:rgba(184,146,74,0.12); color:var(--gold); padding:0.2rem 0.6rem; border-radius:2px; font-weight:500;" data-fr="Le + courant" data-en="Most common">Le + courant</div>
+            </div>
+            <div style="font-size:0.875rem; color:var(--text-muted); font-weight:300;" data-fr="La grande majorité de nos clients optent pour un contrat mensuel, adapté à la durée réelle de leur séjour (semestre, année académique, mission VIE). Plus souple, sans engagement annuel." data-en="The vast majority of our clients opt for a monthly contract, suited to their actual stay duration (semester, academic year, VIE assignment). More flexible, no annual commitment.">La grande majorité de nos clients optent pour un contrat mensuel, adapté à la durée réelle de leur séjour (semestre, année académique, mission VIE). Plus souple, sans engagement annuel.</div>
+          </div>
+          <div style="background:var(--cream); border-radius:3px; padding:1.2rem 1.5rem;">
+            <div style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); font-weight:500; margin-bottom:0.5rem;" data-fr="Contrat annuel (Yearly)" data-en="Yearly contract">Contrat annuel (Yearly)</div>
+            <div style="font-size:0.875rem; color:var(--text-muted); font-weight:300;" data-fr="Engagement sur 12 mois. Moins courant dans notre offre, car la plupart des étudiants et expatriés ne restent pas une année complète. À envisager uniquement si votre séjour est confirmé sur 12 mois." data-en="12-month commitment. Less common in our offer, as most students and expats do not stay a full year. Only recommended if your stay is confirmed for 12 months.">Engagement sur 12 mois. Moins courant dans notre offre, car la plupart des étudiants et expatriés ne restent pas une année complète. À envisager uniquement si votre séjour est confirmé sur 12 mois.</div>
+          </div>
+          <div style="background:rgba(184,146,74,0.08); border:1px solid rgba(184,146,74,0.2); border-radius:3px; padding:1.2rem 1.5rem;">
+            <div style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:0.5rem;" data-fr="Notre garantie prix" data-en="Our price guarantee">Notre garantie prix</div>
+            <div style="font-size:0.875rem; color:var(--text-muted); font-weight:300;" data-fr="Grâce à notre réseau, nous garantissons le prix négocié dès le départ — quelle que soit la saison. Contrairement aux agences classiques qui ajustent les loyers selon la période, votre tarif reste fixe du premier au dernier mois." data-en="Thanks to our network, we guarantee the negotiated price from day one — regardless of the season. Unlike traditional agencies that adjust rents based on the period, your rate stays fixed from the first to the last month.">Grâce à notre réseau, nous garantissons le prix négocié dès le départ — quelle que soit la saison. Contrairement aux agences classiques qui ajustent les loyers selon la période, votre tarif reste fixe du premier au dernier mois.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRAIS À PRÉVOIR -->
+    <div style="margin-top:2rem; background:var(--navy-mid); border:1px solid rgba(184,146,74,0.15); border-radius:4px; padding:2rem 2.5rem;" class="reveal">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem; align-items:start;">
+        <div>
+          <div style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:0.8rem;" data-fr="Frais d'agence" data-en="Agency fees">Frais d'agence</div>
+          <div style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; color:var(--white); line-height:1.1; margin-bottom:0.4rem;">2 300 <span style="font-size:1rem; color:var(--gold);">AED</span></div>
+          <div style="font-size:0.875rem; color:rgba(255,255,255,0.6); font-weight:300; line-height:1.6; margin-top:0.5rem;" data-fr="Forfait fixe, sans commission cachée. Couvre l'intégralité de l'accompagnement, de l'appel découverte jusqu'à la remise des clés." data-en="Fixed fee, no hidden commission. Covers the full support from discovery call to key handover.">Forfait fixe, sans commission cachée. Couvre l'intégralité de l'accompagnement, de l'appel découverte jusqu'à la remise des clés.</div>
+        </div>
+        <div>
+          <div style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); font-weight:500; margin-bottom:0.8rem;" data-fr="Dépôt de garantie (Security deposit)" data-en="Security deposit">Dépôt de garantie (Security deposit)</div>
+          <div style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; color:var(--white); line-height:1.1; margin-bottom:0.4rem;">1 000 – 2 000 <span style="font-size:1rem; color:var(--gold);">AED</span></div>
+          <div style="font-size:0.875rem; color:rgba(255,255,255,0.6); font-weight:300; line-height:1.6; margin-top:0.5rem;" data-fr="Requis à la signature du bail. Restitué intégralement en fin de contrat si le logement est rendu en bon état." data-en="Required at lease signing. Fully returned at end of contract if the property is returned in good condition.">Requis à la signature du bail. Restitué intégralement en fin de contrat si le logement est rendu en bon état.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATALOGUE LOGEMENTS DISPONIBLES -->
+  <div id="catalogue" style="margin-top:5rem;" class="reveal">
+    <div class="section-header" style="margin-bottom:3rem;">
+      <div class="tag" data-fr="Logements actuels" data-en="Current Properties">Logements actuels</div>
+      <h2><span data-fr="Catalogue disponible" data-en="Available catalogue">Catalogue disponible</span></h2>
+      <p data-fr="Une sélection de logements représentatifs de notre offre. Les biens indiqués peuvent avoir été loués — ils donnent une idée fidèle du standing et des prix pratiqués." data-en="A selection of properties representative of our offer. Listed properties may have been rented — they give an accurate sense of the quality and pricing.">Une sélection de logements représentatifs de notre offre. Les biens indiqués peuvent avoir été loués — ils donnent une idée fidèle du standing et des prix pratiqués.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
+
+      <!-- CARD 1 : BAY CENTRAL -->
+      <div style="background:var(--navy-mid); border:1px solid rgba(184,146,74,0.2); border-radius:6px; overflow:hidden;">
+        <div style="position:relative; background:#111; height:260px; overflow:hidden;">
+          <div id="baycentral-gallery" style="display:flex; height:100%; transition:transform 0.4s ease;">
+            <img src="baycentral/exterieur.jpg" alt="Bay Central — Dubai Marina" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/chambre1.jpg" alt="Chambre — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/cuisine1.jpg" alt="Cuisine & salle à manger — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/cuisine2.jpg" alt="Cuisine ouverte — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/cuisine3.jpg" alt="Cuisine équipée — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/sejour1.jpg" alt="Séjour vue Marina — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/sejour2.jpg" alt="Séjour & cuisine — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/sdb.jpg" alt="Salle de bain — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/balcon.jpg" alt="Balcon vue Marina — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/piscine.jpg" alt="Piscine — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="baycentral/gym.jpg" alt="Salle de sport — Bay Central" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+          </div>
+          <button onclick="bayCentralSlide(-1)" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.55);border:none;color:#C9A84C;font-size:1.1rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">‹</button>
+          <button onclick="bayCentralSlide(1)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.55);border:none;color:#C9A84C;font-size:1.1rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">›</button>
+          <div id="baycentral-counter" style="position:absolute;top:10px;left:12px;background:rgba(0,0,0,0.55);color:#C9A84C;font-size:0.65rem;font-family:'DM Sans',sans-serif;letter-spacing:0.1em;padding:3px 8px;border-radius:2px;">1 / 11</div>
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:1rem 1.25rem; background:linear-gradient(transparent,rgba(10,9,7,0.95));">
+            <div style="font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:4px;">Studio · Dubai Marina</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--white);">Bay Central <em style="color:var(--gold);">T2</em></div>
+          </div>
+          <div style="position:absolute; top:1rem; right:1rem; background:rgba(76,175,125,0.15); border:1px solid rgba(76,175,125,0.4); border-radius:2px; padding:3px 10px; font-size:0.65rem; letter-spacing:0.1em; color:#4caf7d; font-family:'DM Sans',sans-serif;">DISPONIBLE</div>
+        </div>
+        <div style="padding:1.5rem;">
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:1.5rem;">
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">Studio</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Type</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">572</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Sqft</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">1</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">SDB</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">1<sup style="font-size:0.6rem;">er</sup></div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Étage</div>
+            </div>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.5rem;">
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Clim centrale</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Piscine</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Balcon aménagé</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Parking couvert</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Salle de sport</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Meublé complet</span>
+          </div>
+          <div style="border-top:1px solid rgba(184,146,74,0.1); padding-top:1.25rem; display:flex; justify-content:space-between; align-items:flex-end;">
+            <div>
+              <div style="font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); font-family:'DM Sans',sans-serif; margin-bottom:4px;" data-fr="Loyer mensuel" data-en="Monthly rent">Loyer mensuel</div>
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--gold);">13 781 <span style="font-size:0.9rem;">AED</span></div>
+              <div style="font-size:0.7rem; color:var(--text-muted); font-family:'DM Sans',sans-serif;" data-fr="soit 110 250 AED/an" data-en="i.e. 110,250 AED/year">soit 110 250 AED/an</div>
+            </div>
+            <a href="https://wa.me/971585802766?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20studio%20Bay%20Central%20T2%20%C3%A0%20Dubai%20Marina." style="background:var(--gold); color:var(--navy); padding:0.6rem 1.2rem; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; font-family:'DM Sans',sans-serif; font-weight:500; text-decoration:none; border-radius:2px; display:flex; align-items:center; gap:6px;" data-fr="Nous contacter" data-en="Contact us">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              <span data-fr="Nous contacter" data-en="Contact us">Nous contacter</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2 : MERANO TOWER -->
+      <div style="background:var(--navy-mid); border:1px solid rgba(184,146,74,0.2); border-radius:6px; overflow:hidden;">
+        <div style="position:relative; background:#111; height:260px; overflow:hidden;">
+          <!-- GALERIE SLIDER -->
+          <div id="merano-gallery" style="display:flex; height:100%; transition:transform 0.4s ease;">
+            <img src="merano/salon1.jpg" alt="Salon vue ville — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/salon2.jpg" alt="Salon & chambre — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/salon3.jpg" alt="Séjour cuisine ouverte — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/salon4.jpg" alt="Vue d'ensemble séjour — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/cuisine1.jpg" alt="Cuisine américaine — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/cuisine2.jpg" alt="Cuisine équipée — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/chambre1.jpg" alt="Chambre vue Downtown — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/chambre2.jpg" alt="Chambre double — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="merano/chambre3.jpg" alt="Chambre balcon — Merano Tower" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+          </div>
+          <!-- NAVIGATION -->
+          <button onclick="meranoSlide(-1)" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.55);border:none;color:#C9A84C;font-size:1.1rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">‹</button>
+          <button onclick="meranoSlide(1)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.55);border:none;color:#C9A84C;font-size:1.1rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">›</button>
+          <!-- COUNTER -->
+          <div id="merano-counter" style="position:absolute;top:10px;left:12px;background:rgba(0,0,0,0.55);color:#C9A84C;font-size:0.65rem;font-family:'DM Sans',sans-serif;letter-spacing:0.1em;padding:3px 8px;border-radius:2px;">1 / 9</div>
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:1rem 1.25rem; background:linear-gradient(transparent,rgba(10,9,7,0.95));">
+            <div style="font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:4px;">1 Bedroom · Business Bay</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--white);">Merano <em style="color:var(--gold);">Tower</em></div>
+          </div>
+          <div style="position:absolute; top:1rem; right:1rem; background:rgba(76,175,125,0.15); border:1px solid rgba(76,175,125,0.4); border-radius:2px; padding:3px 10px; font-size:0.65rem; letter-spacing:0.1em; color:#4caf7d; font-family:'DM Sans',sans-serif;">DISPONIBLE</div>
+        </div>
+        <div style="padding:1.5rem;">
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:1.5rem;">
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">1BR</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Type</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">675</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Sqft</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">2</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">SDB</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">23<sup style="font-size:0.6rem;">e</sup></div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Étage</div>
+            </div>
+          </div>
+          <div style="background:rgba(184,146,74,0.06); border:1px solid rgba(184,146,74,0.15); border-radius:3px; padding:8px 12px; margin-bottom:1rem; display:flex; align-items:center; gap:8px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            <span style="font-size:0.7rem; color:var(--gold); font-family:'DM Sans',sans-serif; letter-spacing:0.05em;" data-fr="Vue panoramique Burj Khalifa & Downtown Dubai depuis le 23ème étage" data-en="Panoramic view of Burj Khalifa & Downtown Dubai from the 23rd floor">Vue panoramique Burj Khalifa & Downtown depuis le 23ème étage</span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.5rem;">
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Meublé complet</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Clim centrale</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Balcon vue ville</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Sécurité 24h</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Gym partagé</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Piscine DAMAC</span>
+          </div>
+          <div style="border-top:1px solid rgba(184,146,74,0.1); padding-top:1.25rem; display:flex; justify-content:space-between; align-items:flex-end;">
+            <div>
+              <div style="font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); font-family:'DM Sans',sans-serif; margin-bottom:4px;" data-fr="Loyer mensuel" data-en="Monthly rent">Loyer mensuel</div>
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--gold);">13 125 <span style="font-size:0.9rem;">AED</span></div>
+              <div style="font-size:0.7rem; color:var(--text-muted); font-family:'DM Sans',sans-serif;" data-fr="soit 105 000 AED / 8 mois" data-en="i.e. 105,000 AED / 8 months">soit 105 000 AED / 8 mois</div>
+            </div>
+            <a href="https://wa.me/971585802766?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%201BR%20Merano%20Tower%20au%2023%C3%A8me%20%C3%A9tage%20%C3%A0%20Business%20Bay." style="background:var(--gold); color:var(--navy); padding:0.6rem 1.2rem; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; font-family:'DM Sans',sans-serif; font-weight:500; text-decoration:none; border-radius:2px; display:flex; align-items:center; gap:6px;" data-fr="Nous contacter" data-en="Contact us">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              <span data-fr="Nous contacter" data-en="Contact us">Nous contacter</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- CARD 3 : TRIDENT BAYSIDE -->
+      <div style="background:var(--navy-mid); border:1px solid rgba(184,146,74,0.2); border-radius:6px; overflow:hidden;">
+        <div style="position:relative; background:#111; height:260px; overflow:hidden;">
+          <div id="trident-gallery" style="display:flex; height:100%; transition:transform 0.4s ease;">
+            <img src="tridentbayside/vue_nuit.jpg" alt="Vue Marina de nuit — Trident Bayside" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="tridentbayside/piscine.jpg" alt="Piscine infinity — Trident Bayside" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="tridentbayside/sejour1.jpg" alt="Séjour & salle à manger — Trident Bayside" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="tridentbayside/sejour2.jpg" alt="Séjour vue Marina — Trident Bayside" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="tridentbayside/cuisine.jpg" alt="Cuisine équipée — Trident Bayside" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="tridentbayside/chambre_master1.jpg" alt="Master bedroom — Trident Bayside" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="tridentbayside/chambre_master2.jpg" alt="Master bedroom — Trident Bayside" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="tridentbayside/chambre2.jpg" alt="Chambre 2 — Trident Bayside" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="tridentbayside/terrasse.jpg" alt="Grande terrasse vue Marina — Trident Bayside" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="tridentbayside/sdb1.jpg" alt="Salle de bain master — Trident Bayside" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="tridentbayside/sdb2.jpg" alt="Salle de bain 2 — Trident Bayside" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+            <img src="tridentbayside/maid_room.jpg" alt="Maid room — Trident Bayside" style="min-width:100%; height:100%; object-fit:cover; flex-shrink:0;" />
+          </div>
+          <button onclick="tridentSlide(-1)" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.55);border:none;color:#C9A84C;font-size:1.1rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">‹</button>
+          <button onclick="tridentSlide(1)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.55);border:none;color:#C9A84C;font-size:1.1rem;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">›</button>
+          <div id="trident-counter" style="position:absolute;top:10px;left:12px;background:rgba(0,0,0,0.55);color:#C9A84C;font-size:0.65rem;font-family:'DM Sans',sans-serif;letter-spacing:0.1em;padding:3px 8px;border-radius:2px;">1 / 12</div>
+          <div style="position:absolute; bottom:0; left:0; right:0; padding:1rem 1.25rem; background:linear-gradient(transparent,rgba(10,9,7,0.95));">
+            <div style="font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:4px;">2BR + Maid · Dubai Marina</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--white);">Trident Bayside <em style="color:var(--gold);">Marina</em></div>
+          </div>
+          <div style="position:absolute; top:1rem; right:1rem; background:rgba(76,175,125,0.15); border:1px solid rgba(76,175,125,0.4); border-radius:2px; padding:3px 10px; font-size:0.65rem; letter-spacing:0.1em; color:#4caf7d; font-family:'DM Sans',sans-serif;">DISPONIBLE</div>
+        </div>
+        <div style="padding:1.5rem;">
+          <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:1.5rem;">
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">2BR+M</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Type</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">150 m²</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Surface</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">3</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">SDB</div>
+            </div>
+            <div style="background:var(--navy); border:1px solid rgba(184,146,74,0.1); border-radius:3px; padding:10px 8px; text-align:center;">
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold);">3</div>
+              <div style="font-size:0.6rem; color:var(--text-muted); letter-spacing:0.1em; margin-top:2px; text-transform:uppercase;">Ch.</div>
+            </div>
+          </div>
+          <div style="background:rgba(184,146,74,0.06); border:1px solid rgba(184,146,74,0.15); border-radius:3px; padding:8px 12px; margin-bottom:1rem; display:flex; align-items:center; gap:8px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            <span style="font-size:0.7rem; color:var(--gold); font-family:'DM Sans',sans-serif; letter-spacing:0.05em;" data-fr="Grande terrasse privée avec vue panoramique sur la Marina de Dubaï" data-en="Large private terrace with panoramic view of Dubai Marina">Grande terrasse privée avec vue panoramique sur la Marina de Dubaï</span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.5rem;">
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Meublé complet</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Piscine infinity</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Maid room</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">3 salles de bain</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Clim centrale</span>
+            <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;">Vue Marina</span>
+          </div>
+          <div style="border-top:1px solid rgba(184,146,74,0.1); padding-top:1.25rem; display:flex; justify-content:space-between; align-items:flex-end;">
+            <div>
+              <div style="font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); font-family:'DM Sans',sans-serif; margin-bottom:4px;" data-fr="Loyer mensuel" data-en="Monthly rent">Loyer mensuel</div>
+              <div style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--gold);">15 000 <span style="font-size:0.9rem;">AED</span></div>
+              <div style="font-size:0.7rem; color:var(--text-muted); font-family:'DM Sans',sans-serif;" data-fr="Sept. → Avril (8 mois)" data-en="Sept. → April (8 months)">Sept. → Avril (8 mois)</div>
+            </div>
+            <a href="https://wa.me/971585802766?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%202BR%20%2B%20Maid%20Trident%20Bayside%20%C3%A0%20Dubai%20Marina." style="background:var(--gold); color:var(--navy); padding:0.6rem 1.2rem; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; font-family:'DM Sans',sans-serif; font-weight:500; text-decoration:none; border-radius:2px; display:flex; align-items:center; gap:6px;" data-fr="Nous contacter" data-en="Contact us">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              <span data-fr="Nous contacter" data-en="Contact us">Nous contacter</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:1.5rem; text-align:center;">
+      <p style="font-size:0.8rem; color:var(--text-muted); font-family:'DM Sans',sans-serif; font-weight:300;" data-fr="Ces logements sont représentatifs de notre offre. Contactez-nous pour connaître les disponibilités actuelles." data-en="These properties are representative of our offer. Contact us for current availability.">Ces logements sont représentatifs de notre offre. Contactez-nous pour connaître les disponibilités actuelles.</p>
+    </div>
+  </div>
+
+  </div>
+</section>
+
+<!-- POURQUOI NOUS -->
+<section id="pourquoi" class="section">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-left reveal">
+        <div class="tag" style="border-color: rgba(201,168,76,0.5);" data-fr="Pourquoi nous choisir" data-en="Why choose us">Pourquoi nous choisir</div>
+        <h2><span data-fr="Votre allié de confiance,<br>où que vous soyez,<br>pour <em style='color:var(--gold);font-style:italic'>Dubaï</em>" data-en="Your trusted partner,<br>wherever you are,<br>for <em style='color:var(--gold);font-style:italic'>Dubai</em>">Votre allié de confiance,<br>où que vous soyez,<br>pour <em style="color:var(--gold);font-style:italic">Dubaï</em></span></h2>
+        <p data-fr="Aura Dubai Properties est né d'un constat simple : trouver un logement à distance dans une ville que l'on ne connaît pas peut être complexe et stressant. Notre mission est d'accompagner les étudiants, les expatriés et leurs familles pour trouver la solution de logement la plus adaptée à leur profil, leur budget et leur mode de vie." data-en="Aura Dubai Properties was born from a simple observation: finding housing remotely in a city you don't know can be complex and stressful. Our mission is to support students, expats and their families in finding the housing solution best suited to their profile, budget and lifestyle.">Aura Dubai Properties est né d'un constat simple : trouver un logement à distance dans une ville que l'on ne connaît pas peut être complexe et stressant. Notre mission est d'accompagner les étudiants, les expatriés et leurs familles pour trouver la solution de logement la plus adaptée à leur profil, leur budget et leur mode de vie.</p>
+        <div class="why-features">
+          <div class="why-feature">
+            <div class="feature-dot">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="feature-text">
+              <h4 data-fr="Intermédiaire de confiance" data-en="Trusted intermediary">Intermédiaire de confiance</h4>
+              <p data-fr="Nous vérifions chaque logement et chaque propriétaire avant de vous en parler." data-en="We vet every property and every landlord before presenting anything to you.">Nous vérifions chaque logement et chaque propriétaire avant de vous en parler.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="feature-dot">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="feature-text">
+              <h4 data-fr="Accompagnement de A à Z" data-en="End-to-end support">Accompagnement de A à Z</h4>
+              <p data-fr="De l'appel découverte jusqu'à la remise des clés, nous sommes à vos côtés." data-en="From your first call to key handover, we're with you every step.">De l'appel découverte jusqu'à la remise des clés, nous sommes à vos côtés.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="feature-dot">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="feature-text">
+              <h4 data-fr="Experts du marché dubaïote" data-en="Dubai market experts">Experts du marché dubaïote</h4>
+              <p data-fr="Quartiers, transports, vie pratique, prix réels : on vous donne toutes les clés." data-en="Neighbourhoods, transport, daily life, real prices: we give you everything you need.">Quartiers, transports, vie pratique, prix réels : on vous donne toutes les clés.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="feature-dot">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <div class="feature-text">
+              <h4 data-fr="Spécialisés étudiants & expatriés" data-en="Students & expats specialists">Spécialisés étudiants & expatriés</h4>
+              <p data-fr="Étudiants en grande école, professionnels en mobilité internationale : nous maîtrisons vos contraintes, vos délais et vos exigences." data-en="Grande école students, international mobility professionals: we understand your constraints, your timelines and your standards.">Étudiants en grande école, professionnels en mobilité internationale : nous maîtrisons vos contraintes, vos délais et vos exigences.</p>
+            </div>
+          </div>
+          <div class="why-feature">
+            <div class="feature-dot">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+            </div>
+            <div class="feature-text">
+              <h4 data-fr="Paiement mensuel garanti" data-en="Monthly payment guaranteed">Paiement mensuel garanti</h4>
+              <p data-fr="À Dubaï, les propriétaires exigent souvent 2 à 4 chèques à l'avance. Grâce à notre réseau, nous négocions pour vous un paiement mensuel — sans avance massive, sans mauvaise surprise." data-en="In Dubai, landlords often require 2 to 4 cheques upfront. Thanks to our network, we negotiate monthly payments on your behalf — no large advance, no unpleasant surprises.">À Dubaï, les propriétaires exigent souvent 2 à 4 chèques à l'avance. Grâce à notre réseau, nous négocions pour vous un paiement mensuel — sans avance massive, sans mauvaise surprise.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="why-right reveal reveal-delay-2">
+        <div class="trust-card">
+          <div class="trust-logos">
+            <div class="trust-logo-item">
+              <div class="trust-logo-badge">SK</div>
+              <div>
+                <div class="trust-logo-name">SKEMA Business School</div>
+                <div class="trust-logo-sub" data-fr="Partenaire — Campus Dubaï" data-en="Partner — Dubai Campus">Partenaire — Campus Dubaï</div>
+              </div>
+            </div>
+            <div class="trust-logo-item">
+              <div class="trust-logo-badge" style="background: rgba(184,146,74,0.15); color: var(--gold);">VIE</div>
+              <div>
+                <div class="trust-logo-name" data-fr="Professionnels en mobilité" data-en="International mobility professionals">Professionnels en mobilité</div>
+                <div class="trust-logo-sub" data-fr="LVMH, grandes entreprises françaises" data-en="LVMH, major French companies">LVMH, grandes entreprises françaises</div>
+              </div>
+            </div>
+            <div class="trust-logo-item">
+              <div class="trust-logo-badge" style="background: rgba(184,146,74,0.15); color: var(--gold);">INT</div>
+              <div>
+                <div class="trust-logo-name" data-fr="Étudiants internationaux" data-en="International students">Étudiants internationaux</div>
+                <div class="trust-logo-sub" data-fr="Grandes écoles françaises & étrangères" data-en="French & international grandes écoles">Grandes écoles françaises & étrangères</div>
+              </div>
+            </div>
+          </div>
+          <div class="trust-stat">
+            <div class="trust-stat-num">+150</div>
+            <div class="trust-stat-label" data-fr="Clients accompagnés la 1ère année" data-en="Clients supported in year 1">Clients accompagnés la 1ère année</div>
+          </div>
+          <!-- TEAM -->
+          <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,0.08);">
+            <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;" data-fr="Notre équipe" data-en="Our team">Notre équipe</div>
+            <div style="display:flex;flex-direction:column;gap:0.9rem;">
+              <div style="display:flex;align-items:center;gap:0.9rem;">
+                <div style="width:2.4rem;height:2.4rem;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--navy);font-weight:600;flex-shrink:0;">YO</div>
+                <div>
+                  <div style="color:var(--white);font-size:0.9rem;font-weight:500;">Yassine Ouboukhlik</div>
+                  <div style="color:rgba(255,255,255,0.4);font-size:0.75rem;" data-fr="Founder & Student Housing Advisor" data-en="Founder & Student Housing Advisor">Founder & Student Housing Advisor</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.9rem;">
+                <div style="width:2.4rem;height:2.4rem;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--navy);font-weight:600;flex-shrink:0;">AY</div>
+                <div>
+                  <div style="color:var(--white);font-size:0.9rem;font-weight:500;">Aymane Yahya</div>
+                  <div style="color:rgba(255,255,255,0.4);font-size:0.75rem;" data-fr="Founder & Real Estate Agent" data-en="Founder & Real Estate Agent">Founder & Real Estate Agent</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TÉMOIGNAGES -->
+<section id="temoignages" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag" data-fr="Ils nous font confiance" data-en="They trust us">Ils nous font confiance</div>
+      <h2><span data-fr="Ce que disent nos clients" data-en="What our clients say">Ce que disent nos clients</span></h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal reveal-delay-1">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text" data-fr="« Très bonne expérience, accompagnement sérieux et efficace. J'ai pu signer mon bail depuis Paris avant mon départ, sans stress. »" data-en="« Very good experience, serious and efficient support. I was able to sign my lease from Paris before leaving, stress-free. »">« Très bonne expérience, accompagnement sérieux et efficace. J'ai pu signer mon bail depuis Paris avant mon départ, sans stress. »</div>
+        <div class="testimonial-author">
+          <div class="avatar">C</div>
+          <div>
+            <div class="author-name">Camille R.</div>
+            <div class="author-info">SKEMA Dubai · Studio · Sept. 2025</div>
+          </div>
+          <span class="badge-verified" data-fr="Vérifié" data-en="Verified">Vérifié</span>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text" data-fr="« En tant que parents, on était très inquiets pour le logement. Aura Dubai Properties a tout pris en charge, on savait exactement où logeait notre fils avant même son départ. »" data-en="« As parents we were very worried about housing. Aura Dubai Properties took care of everything. We knew exactly where our son would live before he even left. »">« En tant que parents, on était très inquiets pour le logement. Aura Dubai Properties a tout pris en charge, on savait exactement où logeait notre fils avant même son départ. »</div>
+        <div class="testimonial-author">
+          <div class="avatar">F</div>
+          <div>
+            <div class="author-name">Famille Moreau</div>
+            <div class="author-info" data-fr="Parents d'un étudiant à Dubaï" data-en="Parents of a student in Dubai">Parents d'un étudiant à Dubaï</div>
+          </div>
+          <span class="badge-verified" data-fr="Vérifié" data-en="Verified">Vérifié</span>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-3">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text" data-fr="« Pour mon VIE LVMH, je n'avais que 3 semaines pour trouver un logement. Aura Dubai Properties a trouvé mon studio en 5 jours. Efficacité, réactivité, sérieux. »" data-en="« For my LVMH VIE, I had only 3 weeks to find housing. Aura Dubai Properties found my studio in 5 days. Efficiency, responsiveness, professionalism. »">« Pour mon VIE LVMH, je n'avais que 3 semaines pour trouver un logement. Aura Dubai Properties a trouvé mon studio en 5 jours. Efficacité, réactivité, sérieux. »</div>
+        <div class="testimonial-author">
+          <div class="avatar">T</div>
+          <div>
+            <div class="author-name">Thomas L.</div>
+            <div class="author-info">LVMH VIE Dubai · 1 Bedroom · Jan. 2026</div>
+          </div>
+          <span class="badge-verified" data-fr="Vérifié" data-en="Verified">Vérifié</span>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-4">
+        <div class="stars">★★★★★</div>
+        <div class="testimonial-text" data-fr="« L'équipe m'a conseillé sur les quartiers, le transport, les prix réels. Pas de mauvaises surprises à l'arrivée. Je recommande à 100% à tous les futurs étudiants à Dubaï. »" data-en="« The team advised me on neighbourhoods, transport, real prices. No nasty surprises on arrival. I recommend Aura Dubai Properties to every future Dubai student, 100%. »">« L'équipe m'a conseillé sur les quartiers, le transport, les prix réels. Pas de mauvaises surprises à l'arrivée. Je recommande à 100% à tous les futurs étudiants à Dubaï. »</div>
+        <div class="testimonial-author">
+          <div class="avatar">S</div>
+          <div>
+            <div class="author-name">Sofia B.</div>
+            <div class="author-info">SKEMA Dubai · Colocation · Fév. 2026</div>
+          </div>
+          <span class="badge-verified" data-fr="Vérifié" data-en="Verified">Vérifié</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="tag">FAQ</div>
+      <h2><span data-fr="Vos questions, nos réponses" data-en="Your questions, our answers">Vos questions, nos réponses</span></h2>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" data-fr="Quel budget total prévoir pour Dubaï ?" data-en="What total budget should I plan for Dubai?">Quel budget total prévoir pour Dubaï ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 1v10M1 6h10"/></svg></div>
+        </div>
+        <div class="faq-a"><p data-fr="En plus du loyer, prévoir environ 2 500 – 4 000 AED/mois pour couvrir la nourriture, les transports (Dubai Metro, Careem) et les loisirs. Nos logements incluent l'eau, l'électricité, le WiFi, la salle de sport et la piscine, ce qui réduit considérablement les charges fixes." data-en="On top of rent, budget around 2,500–4,000 AED/month for food, transport (Dubai Metro, Careem) and leisure. Our properties include water, electricity, WiFi, gym and pool, which significantly reduces fixed costs.">En plus du loyer, prévoir environ 2 500 – 4 000 AED/mois pour couvrir la nourriture, les transports (Dubai Metro, Careem) et les loisirs. Nos logements incluent l'eau, l'électricité, le WiFi, la salle de sport et la piscine, ce qui réduit considérablement les charges fixes.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" data-fr="Faut-il payer avant d'arriver à Dubaï ?" data-en="Do I need to pay before arriving in Dubai?">Faut-il payer avant d'arriver à Dubaï ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 1v10M1 6h10"/></svg></div>
+        </div>
+        <div class="faq-a"><p data-fr="Un dépôt de réservation est généralement requis pour bloquer le logement. Nous vous accompagnons dans le processus de paiement sécurisé et vous expliquons toutes les modalités avant tout engagement." data-en="A reservation deposit is generally required to secure the property. We guide you through the secure payment process and explain all terms before any commitment.">Un dépôt de réservation est généralement requis pour bloquer le logement. Nous vous accompagnons dans le processus de paiement sécurisé et vous expliquons toutes les modalités avant tout engagement.</p></div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" data-fr="Comment se passent les visites virtuelles ?" data-en="How do virtual tours work?">Comment se passent les visites virtuelles ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 1v10M1 6h10"/></svg></div>
+        </div>
+        <div class="faq-a"><p data-fr="Nos visites se font en vidéo live (WhatsApp ou FaceTime), avec notre équipe sur place à Dubaï. Vous voyez chaque pièce en temps réel, posez vos questions directement, et recevez ensuite des photos et plans par email." data-en="Our tours are conducted live via video (WhatsApp or FaceTime), with our team on-site in Dubai. You see every room in real time, ask questions live, then receive photos and floor plans by email.">Nos visites se font en vidéo live (WhatsApp ou FaceTime), avec notre équipe sur place à Dubaï. Vous voyez chaque pièce en temps réel, posez vos questions directement, et recevez ensuite des photos et plans par email.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" data-fr="Quels documents sont nécessaires ?" data-en="What documents are needed?">Quels documents sont nécessaires ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 1v10M1 6h10"/></svg></div>
+        </div>
+        <div class="faq-a"><p data-fr="Un seul document est nécessaire : votre passeport valide. Nous nous occupons du reste et vous guidons pas à pas dans les formalités." data-en="Only one document is needed: your valid passport. We take care of the rest and guide you step by step through the formalities.">Un seul document est nécessaire : votre passeport valide. Nous nous occupons du reste et vous guidons pas à pas dans les formalités.</p></div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" data-fr="Quels quartiers recommandez-vous ?" data-en="Which neighbourhoods do you recommend?">Quels quartiers recommandez-vous ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 1v10M1 6h10"/></svg></div>
+        </div>
+        <div class="faq-a"><p data-fr="Nous recommandons principalement trois quartiers : DIFC (Dubai International Financial Centre), idéal pour les étudiants en finance et VIE ; Business Bay, moderne et bien connecté au centre-ville ; et Dubai Marina, prisée pour sa qualité de vie et son ambiance internationale. Nous vous conseillons selon votre école et votre profil." data-en="We primarily recommend three neighbourhoods: DIFC (Dubai International Financial Centre), ideal for finance students and VIE; Business Bay, modern and well-connected to downtown; and Dubai Marina, popular for its quality of life and international atmosphere. We advise based on your school and profile.">Nous recommandons principalement trois quartiers : DIFC (Dubai International Financial Centre), idéal pour les étudiants en finance et VIE ; Business Bay, moderne et bien connecté au centre-ville ; et Dubai Marina, prisée pour sa qualité de vie et son ambiance internationale. Nous vous conseillons selon votre école et votre profil.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" data-fr="Les prix changent-ils selon la période d'arrivée ?" data-en="Do prices change depending on arrival date?">Les prix changent-ils selon la période d'arrivée ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 1v10M1 6h10"/></svg></div>
+        </div>
+        <div class="faq-a"><p data-fr="Oui, le marché dubaïote est très saisonnier. La haute saison s'étend d'octobre à avril : climat agréable, forte demande, prix élevés. La basse saison va de mai à août : chaleur extrême, moins de demande, plus de marge pour négocier. Septembre est une période charnière liée à la rentrée universitaire, avec une forte demande sur les logements proches des campus. Nous recommandons de réserver 2 à 3 mois avant votre arrivée." data-en="Yes, the Dubai market is highly seasonal. High season runs from October to April: pleasant weather, high demand, higher prices. Low season runs from May to August: extreme heat, less demand, more room to negotiate. September is a pivotal moment due to the academic year start, with high demand near campuses. We recommend booking 2–3 months before your arrival.">Oui, le marché dubaïote est très saisonnier. La haute saison s'étend d'octobre à avril : climat agréable, forte demande, prix élevés. La basse saison va de mai à août : chaleur extrême, moins de demande, plus de marge pour négocier. Septembre est une période charnière liée à la rentrée universitaire, avec une forte demande sur les logements proches des campus. Nous recommandons de réserver 2 à 3 mois avant votre arrivée.</p></div>
+      </div>
+      <div class="faq-item reveal" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" data-fr="Qu'est-ce qui est inclus dans le loyer ?" data-en="What's included in the rent?">Qu'est-ce qui est inclus dans le loyer ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 1v10M1 6h10"/></svg></div>
+        </div>
+        <div class="faq-a"><p data-fr="Tous nos logements incluent l'eau, l'électricité, le WiFi haut débit, l'accès à la salle de sport et à la piscine. Certaines résidences proposent également un service de ménage en option." data-en="All our properties include water, electricity, high-speed WiFi, gym and pool access. Some residences also offer optional housekeeping service.">Tous nos logements incluent l'eau, l'électricité, le WiFi haut débit, l'accès à la salle de sport et à la piscine. Certaines résidences proposent également un service de ménage en option.</p></div>
+      </div>
+      <div class="faq-item reveal reveal-delay-1" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          <span class="faq-q-text" data-fr="Combien coûte votre service ?" data-en="How much does your service cost?">Combien coûte votre service ?</span>
+          <div class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 1v10M1 6h10"/></svg></div>
+        </div>
+        <div class="faq-a"><p data-fr="Notre service est facturé 2 300 AED par personne, sans commission cachée. Ce forfait couvre l'intégralité de l'accompagnement : de l'appel découverte jusqu'à la remise des clés." data-en="Our service is priced at 2,300 AED per person, with no hidden fees. This flat fee covers the full support: from the discovery call to key handover.">Notre service est facturé 2 300 AED par personne, sans commission cachée. Ce forfait couvre l'intégralité de l'accompagnement : de l'appel découverte jusqu'à la remise des clés.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left reveal">
+        <div class="tag" style="border-color: rgba(201,168,76,0.5);" data-fr="Nous contacter" data-en="Get in touch">Nous contacter</div>
+        <h2><span data-fr="Commençons<br>votre projet<br><em style='color:var(--gold);font-style:italic'>ensemble</em>" data-en="Let's start<br>your journey<br><em style='color:var(--gold);font-style:italic'>together</em>">Commençons<br>votre projet<br><em style="color:var(--gold);font-style:italic">ensemble</em></span></h2>
+        <p data-fr="Répondez à nos questions ou envoyez-nous un message. Nous vous recontactons sous 24h." data-en="Fill in the form or send us a message. We reply within 24 hours.">Répondez à nos questions ou envoyez-nous un message. Nous vous recontactons sous 24h.</p>
+        <div class="contact-methods">
+          <a href="https://wa.me/971585802766" class="contact-method">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+            </svg>
+            <span>WhatsApp — +971 58 580 2766</span>
+          </a>
+          <a href="mailto:contact@auradubaiproperties.com" class="contact-method">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <span>contact@auradubaiproperties.com</span>
+          </a>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="form-group">
+              <label data-fr="Prénom" data-en="First name">Prénom</label>
+              <input type="text" placeholder="Marie" />
+            </div>
+            <div class="form-group">
+              <label data-fr="Université / École" data-en="University / School">Université / École</label>
+              <input type="text" placeholder="SKEMA Dubai" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label data-fr="Date d'arrivée prévue" data-en="Expected arrival date">Date d'arrivée prévue</label>
+              <input type="date" />
+            </div>
+            <div class="form-group">
+              <label data-fr="Budget logement / mois" data-en="Housing budget / month">Budget logement / mois</label>
+              <select>
+                <option value="" data-fr="Choisir..." data-en="Select...">Choisir...</option>
+                <option data-fr="Moins de 5 000 AED" data-en="Under 5,000 AED">Moins de 5 000 AED</option>
+                <option data-fr="5 000 – 8 000 AED" data-en="5,000 – 8,000 AED">5 000 – 8 000 AED</option>
+                <option data-fr="8 000 – 12 000 AED" data-en="8,000 – 12,000 AED">8 000 – 12 000 AED</option>
+                <option data-fr="Plus de 12 000 AED" data-en="Over 12,000 AED">Plus de 12 000 AED</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label data-fr="Votre message (facultatif)" data-en="Your message (optional)">Votre message (facultatif)</label>
+            <textarea placeholder="..." rows="4"></textarea>
+          </div>
+          <button class="form-submit" data-fr="Envoyer ma demande →" data-en="Send my request →" onclick="handleSubmit(event)">Envoyer ma demande →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">Aura Dubai<span>Properties</span></div>
+    <div class="footer-copy" data-fr="© 2026 Aura Dubai Properties · Tous droits réservés" data-en="© 2026 Aura Dubai Properties · All rights reserved">© 2026 Aura Dubai Properties · Tous droits réservés</div>
+    <div class="footer-links">
+      <a href="#" data-fr="Mentions légales" data-en="Legal notice">Mentions légales</a>
+      <a href="#" data-fr="Confidentialité" data-en="Privacy">Confidentialité</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/971585802766" class="whatsapp-float" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+  // ===================== LANGUAGE TOGGLE =====================
+  let currentLang = 'fr';
+
+  function toggleLang() {
+    currentLang = currentLang === 'fr' ? 'en' : 'fr';
+    document.getElementById('langBtn').textContent = currentLang === 'fr' ? 'EN' : 'FR';
+    document.getElementById('mobileLangBtn').textContent = currentLang === 'fr' ? 'EN' : 'FR';
+    document.documentElement.lang = currentLang;
+
+    // Update all elements with data-fr / data-en
+    document.querySelectorAll('[data-fr]').forEach(el => {
+      const text = el.getAttribute(`data-${currentLang}`);
+      if (text) {
+        // For elements with HTML content (h1 spans etc)
+        if (text.includes('<')) {
+          el.innerHTML = text;
+        } else {
+          el.textContent = text;
+        }
+      }
+    });
+
+    // Update hero h1 specifically
+    const heroH1Span = document.querySelector('#hero h1 span');
+    if (heroH1Span) {
+      const txt = heroH1Span.getAttribute(`data-${currentLang}`);
+      if (txt) heroH1Span.innerHTML = txt;
+    }
+
+    // Update select options
+    document.querySelectorAll('select option[data-fr]').forEach(opt => {
+      const t = opt.getAttribute(`data-${currentLang}`);
+      if (t) opt.textContent = t;
+    });
+  }
+
+  // ===================== NAVBAR SCROLL =====================
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // ===================== SCROLL REVEAL =====================
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // ===================== FAQ TOGGLE =====================
+  function toggleFaq(item) {
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // ===================== MOBILE MENU =====================
+  function openMobileMenu() {
+    document.getElementById('mobileMenu').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobileMenu() {
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ===================== BAY CENTRAL GALLERY SLIDER =====================
+  let bayCentralIdx = 0;
+  const bayCentralTotal = 11;
+  function bayCentralSlide(dir) {
+    bayCentralIdx = (bayCentralIdx + dir + bayCentralTotal) % bayCentralTotal;
+    document.getElementById('baycentral-gallery').style.transform = `translateX(-${bayCentralIdx * 100}%)`;
+    document.getElementById('baycentral-counter').textContent = `${bayCentralIdx + 1} / ${bayCentralTotal}`;
+  }
+
+  // ===================== MERANO GALLERY SLIDER =====================
+  let meranoIdx = 0;
+  const meranoTotal = 9;
+  function meranoSlide(dir) {
+    meranoIdx = (meranoIdx + dir + meranoTotal) % meranoTotal;
+    document.getElementById('merano-gallery').style.transform = `translateX(-${meranoIdx * 100}%)`;
+    document.getElementById('merano-counter').textContent = `${meranoIdx + 1} / ${meranoTotal}`;
+  }
+
+  let tridentIdx = 0;
+  const tridentTotal = 12;
+  function tridentSlide(dir) {
+    tridentIdx = (tridentIdx + dir + tridentTotal) % tridentTotal;
+    document.getElementById('trident-gallery').style.transform = `translateX(-${tridentIdx * 100}%)`;
+    document.getElementById('trident-counter').textContent = `${tridentIdx + 1} / ${tridentTotal}`;
+  }
+
+  // ===================== FORM SUBMIT =====================
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target;
+    const originalText = btn.textContent;
+    btn.textContent = currentLang === 'fr' ? 'Message envoyé ✓' : 'Message sent ✓';
+    btn.style.background = '#4CAF50';
+    btn.style.color = '#fff';
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 3500);
+  }
 </script>
 </body>
 </html>
