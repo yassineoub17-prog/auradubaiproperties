@@ -617,6 +617,8 @@
     .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
   }
 
+  .ec-arrow:hover { background: var(--gold) !important; color: var(--navy) !important; border-color: var(--gold) !important; }
+
   .coloc-row { transition: padding-left 0.2s ease; }
   .coloc-row:hover { padding-left: 6px; }
   .coloc-row:hover span:first-child { color: var(--gold) !important; }
@@ -1091,6 +1093,22 @@
         <div id="ec-label" style="position:absolute; top:10px; left:10px; background:rgba(12,11,9,0.7); color:var(--gold);
                     font-size:0.58rem; letter-spacing:0.15em; font-family:'DM Sans',sans-serif; padding:3px 9px;
                     border-radius:2px; text-transform:uppercase;">Chambre double</div>
+
+        <div id="ec-counter" style="position:absolute; bottom:10px; right:10px; background:rgba(12,11,9,0.7); color:var(--gold);
+                    font-size:0.58rem; letter-spacing:0.12em; font-family:'DM Sans',sans-serif; padding:3px 9px;
+                    border-radius:2px;">1 / 4</div>
+
+        <button onclick="event.stopPropagation(); ecSlide(-1)" aria-label="Chambre précédente"
+          style="position:absolute; left:8px; top:50%; transform:translateY(-50%); background:rgba(12,11,9,0.55);
+                 border:1px solid rgba(184,146,74,0.35); color:var(--gold); font-size:1.05rem; width:30px; height:30px;
+                 border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;
+                 line-height:1; padding:0; transition:all 0.2s ease;" class="ec-arrow">‹</button>
+
+        <button onclick="event.stopPropagation(); ecSlide(1)" aria-label="Chambre suivante"
+          style="position:absolute; right:8px; top:50%; transform:translateY(-50%); background:rgba(12,11,9,0.55);
+                 border:1px solid rgba(184,146,74,0.35); color:var(--gold); font-size:1.05rem; width:30px; height:30px;
+                 border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;
+                 line-height:1; padding:0; transition:all 0.2s ease;" class="ec-arrow">›</button>
       </div>
 
       <div style="padding:1.6rem 1.75rem; display:flex; flex-direction:column; justify-content:center;">
@@ -2150,6 +2168,12 @@
     { label:'Suite',          file:'ch4', wa:'Bonjour%2C%20la%20suite%20%C3%A0%20Emirates%20Crown%20(8%20000%20AED)%20m%27int%C3%A9resse.' }
   ];
 
+  let ecIdx = 0;
+
+  function ecSlide(dir) {
+    selectEmiratesRoom((ecIdx + dir + ecRooms.length) % ecRooms.length);
+  }
+
   function selectEmiratesRoom(i) {
     const r = ecRooms[i];
     const v = document.getElementById('ec-video');
@@ -2162,7 +2186,9 @@
     v.load();
     btn.style.opacity = '1';
     btn.style.pointerEvents = 'auto';
+    ecIdx = i;
     document.getElementById('ec-label').textContent = r.label;
+    document.getElementById('ec-counter').textContent = (i + 1) + ' / ' + ecRooms.length;
     document.getElementById('ec-wa').href = 'https://wa.me/971585802766?text=' + r.wa;
     document.querySelectorAll('[data-ec]').forEach(el => {
       const on = Number(el.dataset.ec) === i;
