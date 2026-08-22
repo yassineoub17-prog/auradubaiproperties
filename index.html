@@ -634,11 +634,16 @@
 
   @media (max-width: 900px) {
     .video-feature { grid-template-columns: 1fr !important; }
-    .coloc-feature > div:first-child { width: 100% !important; aspect-ratio: 16/9 !important; max-height: none !important; }
     .video-feature > div:first-child {
       width: 100% !important;
       aspect-ratio: 16/12 !important;
       max-height: 420px;
+    }
+    /* vidéos paysage : on garde le 16/9 natif, pas de recadrage */
+    .video-feature.coloc-feature > div:first-child {
+      width: 100% !important;
+      aspect-ratio: 16/9 !important;
+      max-height: none !important;
     }
   }
 
@@ -2199,15 +2204,27 @@
   });
 
   // ===================== SCROLL REVEAL =====================
+  // threshold 0 : se déclenche dès qu'un pixel entre dans l'écran.
+  // Indispensable car certaines sections (catalogue) dépassent la hauteur du viewport
+  // sur mobile — un seuil en pourcentage ne serait alors jamais atteint.
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12 });
+  }, { threshold: 0, rootMargin: '0px 0px -60px 0px' });
 
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Filet de sécurité : si l'observateur échoue, tout redevient visible
+  setTimeout(function () {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight) el.classList.add('visible');
+    });
+  }, 1200);
 
   // ===================== FAQ TOGGLE =====================
   function toggleFaq(item) {
