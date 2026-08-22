@@ -617,15 +617,20 @@
     .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
   }
 
-  #century-play:hover, #century3br-play:hover {
+  .coloc-row { transition: padding-left 0.2s ease; }
+  .coloc-row:hover { padding-left: 6px; }
+  .coloc-row:hover span:first-child { color: var(--gold) !important; }
+
+  #century-play:hover, #century3br-play:hover, #coloc-play:hover, #ec-play:hover {
     background: rgba(184,146,74,0.9) !important;
     border-color: var(--gold) !important;
     transform: scale(1.08);
   }
-  #century-play:hover svg, #century3br-play:hover svg { fill: var(--navy); }
+  #century-play:hover svg, #century3br-play:hover svg, #coloc-play:hover svg, #ec-play:hover svg { fill: var(--navy); }
 
   @media (max-width: 900px) {
     .video-feature { grid-template-columns: 1fr !important; }
+    .coloc-feature > div:first-child { width: 100% !important; aspect-ratio: 16/9 !important; max-height: none !important; }
     .video-feature > div:first-child {
       width: 100% !important;
       aspect-ratio: 16/12 !important;
@@ -1004,6 +1009,149 @@
 
     </div>
 
+    <div style="display:flex; align-items:center; gap:0.9rem; margin:0 0 1.5rem;">
+      <span style="font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); font-family:'DM Sans',sans-serif; white-space:nowrap;" data-fr="Chambres en colocation" data-en="Rooms in flatshares">Chambres en colocation</span>
+      <span style="flex:1; height:1px; background:rgba(184,146,74,0.18);"></span>
+    </div>
+
+    <!-- ===== COLOCATION DMCC — VIDÉO ===== -->
+    <div style="background:var(--navy-mid); border:1px solid rgba(184,146,74,0.2); border-radius:6px; overflow:hidden; margin-bottom:2rem; display:grid; grid-template-columns:380px 1fr;" class="video-feature coloc-feature">
+
+      <!-- Vidéo paysage -->
+      <div style="position:relative; background:var(--navy); aspect-ratio:16/9; align-self:center; overflow:hidden;">
+        <video id="coloc-video" src="coloc-jlt/visite.mp4" poster="coloc-jlt/poster.jpg" playsinline preload="metadata"
+          style="width:100%; height:100%; object-fit:cover; display:block; cursor:pointer;" onclick="toggleColocVideo()"></video>
+
+        <button id="coloc-play" onclick="toggleColocVideo()" aria-label="Lire la vidéo"
+          style="position:absolute; inset:0; margin:auto; width:54px; height:54px; border-radius:50%;
+                 background:rgba(12,11,9,0.55); border:1px solid rgba(184,146,74,0.5); backdrop-filter:blur(4px);
+                 cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.25s ease;">
+          <svg width="17" height="19" viewBox="0 0 20 22" fill="var(--gold)"><path d="M0 0 L20 11 L0 22 Z"/></svg>
+        </button>
+
+        <div style="position:absolute; top:10px; left:10px; background:rgba(12,11,9,0.7); color:var(--gold);
+                    font-size:0.58rem; letter-spacing:0.15em; font-family:'DM Sans',sans-serif; padding:3px 9px;
+                    border-radius:2px; text-transform:uppercase;" data-fr="Visite vidéo" data-en="Video tour">Visite vidéo</div>
+      </div>
+
+      <!-- Infos -->
+      <div style="padding:1.6rem 1.75rem; display:flex; flex-direction:column; justify-content:center;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; margin-bottom:0.9rem;">
+          <div>
+            <div style="font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:5px;" data-fr="Colocation 5 personnes · DMCC" data-en="5-person flatshare · DMCC">Colocation 5 personnes · DMCC</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--white); line-height:1.2;" data-fr="Chambres en <em style='color:var(--gold);'>colocation</em>" data-en="Rooms in a <em style='color:var(--gold);'>flatshare</em>">Chambres en <em style="color:var(--gold);">colocation</em></div>
+          </div>
+          <div style="background:rgba(76,175,125,0.15); border:1px solid rgba(76,175,125,0.4); border-radius:2px; padding:3px 10px; font-size:0.62rem; letter-spacing:0.1em; color:#4caf7d; font-family:'DM Sans',sans-serif; white-space:nowrap;" data-fr="3 DISPO" data-en="3 LEFT">3 DISPO</div>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:1.1rem;">
+          <span style="font-size:0.63rem; color:var(--gold); background:rgba(184,146,74,0.1); border:1px solid rgba(184,146,74,0.3); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif; font-weight:500;" data-fr="✦ 3 min du métro DMCC" data-en="✦ 3 min from DMCC metro">✦ 3 min du métro DMCC</span>
+          <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Non mixte" data-en="Single-gender">Non mixte</span>
+          <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Meublé" data-en="Furnished">Meublé</span>
+          <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Clim centrale" data-en="Central A/C">Clim centrale</span>
+        </div>
+
+        <div style="border-top:1px solid rgba(184,146,74,0.1); padding-top:0.5rem;">
+          <a href="https://wa.me/971585802766?text=Bonjour%2C%20la%20chambre%20simple%20en%20colocation%20DMCC%20(3%20500%20AED)%20m%27int%C3%A9resse." style="display:flex; align-items:baseline; gap:0.6rem; padding:0.6rem 0; border-bottom:1px solid rgba(184,146,74,0.1); text-decoration:none;" class="coloc-row">
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--white); white-space:nowrap;" data-fr="Simple" data-en="Single">Simple</span>
+            <span style="font-size:0.63rem; color:var(--text-muted); font-family:'DM Sans',sans-serif;" data-fr="1 lit · SDB partagée" data-en="1 bed · shared bath">1 lit · SDB partagée</span>
+            <span style="flex:1; border-bottom:1px dotted rgba(184,146,74,0.25); transform:translateY(-3px);"></span>
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--gold); white-space:nowrap;">3 500<span style="font-size:0.68rem;"> AED</span></span>
+          </a>
+          <a href="https://wa.me/971585802766?text=Bonjour%2C%20la%20chambre%20double%20en%20colocation%20DMCC%20(5%20500%20AED)%20m%27int%C3%A9resse." style="display:flex; align-items:baseline; gap:0.6rem; padding:0.6rem 0; border-bottom:1px solid rgba(184,146,74,0.1); text-decoration:none;" class="coloc-row">
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--white); white-space:nowrap;" data-fr="Double" data-en="Double">Double</span>
+            <span style="font-size:0.63rem; color:var(--text-muted); font-family:'DM Sans',sans-serif;" data-fr="2 lits · SDB partagée" data-en="2 beds · shared bath">2 lits · SDB partagée</span>
+            <span style="flex:1; border-bottom:1px dotted rgba(184,146,74,0.25); transform:translateY(-3px);"></span>
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--gold); white-space:nowrap;">5 500<span style="font-size:0.68rem;"> AED</span></span>
+          </a>
+          <a href="https://wa.me/971585802766?text=Bonjour%2C%20la%20chambre%20double%20avec%20SDB%20priv%C3%A9e%20en%20colocation%20DMCC%20(6%20000%20AED)%20m%27int%C3%A9resse." style="display:flex; align-items:baseline; gap:0.6rem; padding:0.6rem 0; border-bottom:1px solid rgba(184,146,74,0.1); text-decoration:none;" class="coloc-row">
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold); white-space:nowrap;" data-fr="Double" data-en="Double">Double</span>
+            <span style="font-size:0.63rem; color:var(--text-muted); font-family:'DM Sans',sans-serif;" data-fr="2 lits · SDB privée" data-en="2 beds · private bath">2 lits · SDB privée</span>
+            <span style="flex:1; border-bottom:1px dotted rgba(184,146,74,0.25); transform:translateY(-3px);"></span>
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--gold); white-space:nowrap;">6 000<span style="font-size:0.68rem;"> AED</span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== COLOCATION EMIRATES CROWN — VIDÉO ===== -->
+    <div style="background:var(--navy-mid); border:1px solid rgba(184,146,74,0.2); border-radius:6px; overflow:hidden; margin-bottom:2rem; display:grid; grid-template-columns:380px 1fr;" class="video-feature coloc-feature">
+
+      <div style="position:relative; background:var(--navy); aspect-ratio:16/9; align-self:center; overflow:hidden;">
+        <video id="ec-video" src="emirates-crown/ch1.mp4" poster="emirates-crown/ch1.jpg" playsinline preload="metadata"
+          style="width:100%; height:100%; object-fit:cover; display:block; cursor:pointer;" onclick="toggleEcVideo()"></video>
+
+        <button id="ec-play" onclick="toggleEcVideo()" aria-label="Lire la vidéo"
+          style="position:absolute; inset:0; margin:auto; width:54px; height:54px; border-radius:50%;
+                 background:rgba(12,11,9,0.55); border:1px solid rgba(184,146,74,0.5); backdrop-filter:blur(4px);
+                 cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.25s ease;">
+          <svg width="17" height="19" viewBox="0 0 20 22" fill="var(--gold)"><path d="M0 0 L20 11 L0 22 Z"/></svg>
+        </button>
+
+        <div id="ec-label" style="position:absolute; top:10px; left:10px; background:rgba(12,11,9,0.7); color:var(--gold);
+                    font-size:0.58rem; letter-spacing:0.15em; font-family:'DM Sans',sans-serif; padding:3px 9px;
+                    border-radius:2px; text-transform:uppercase;">Chambre double</div>
+      </div>
+
+      <div style="padding:1.6rem 1.75rem; display:flex; flex-direction:column; justify-content:center;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; margin-bottom:0.9rem;">
+          <div>
+            <div style="font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:5px;" data-fr="Colocation 5 personnes · Dubai Marina" data-en="5-person flatshare · Dubai Marina">Colocation 5 personnes · Dubai Marina</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--white); line-height:1.2;">Emirates <em style="color:var(--gold);">Crown</em></div>
+          </div>
+          <div style="background:rgba(76,175,125,0.15); border:1px solid rgba(76,175,125,0.4); border-radius:2px; padding:3px 10px; font-size:0.62rem; letter-spacing:0.1em; color:#4caf7d; font-family:'DM Sans',sans-serif; white-space:nowrap;" data-fr="4 DISPO" data-en="4 LEFT">4 DISPO</div>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:1.1rem;">
+          <span style="font-size:0.63rem; color:var(--gold); background:rgba(184,146,74,0.1); border:1px solid rgba(184,146,74,0.3); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif; font-weight:500;" data-fr="✦ Toutes charges incluses" data-en="✦ All bills included">✦ Toutes charges incluses</span>
+          <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Non mixte" data-en="Single-gender">Non mixte</span>
+          <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Meublé" data-en="Furnished">Meublé</span>
+          <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Clim centrale" data-en="Central A/C">Clim centrale</span>
+        </div>
+
+        <div style="font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-muted); font-family:'DM Sans',sans-serif; margin-bottom:0.3rem;" data-fr="Cliquez une chambre pour voir sa vidéo" data-en="Click a room to see its video">Cliquez une chambre pour voir sa vidéo</div>
+        <div style="border-top:1px solid rgba(184,146,74,0.1); padding-top:0.3rem; margin-bottom:1rem;">
+          <button type="button" onclick="selectEmiratesRoom(0)" data-ec="0" data-ec-active="true"
+            style="width:100%; background:none; border:none; border-bottom:1px solid rgba(184,146,74,0.1); padding:0.6rem 0; display:flex; align-items:baseline; gap:0.6rem; cursor:pointer; text-align:left;" class="coloc-row">
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--gold); white-space:nowrap;" data-fr="Chambre double" data-en="Double room">Chambre double</span>
+            <span style="font-size:0.63rem; color:var(--text-muted); font-family:'DM Sans',sans-serif;" data-fr="2 lits" data-en="2 beds">2 lits</span>
+            <span style="flex:1; border-bottom:1px dotted rgba(184,146,74,0.25); transform:translateY(-3px);"></span>
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--gold); white-space:nowrap;">6 000<span style="font-size:0.68rem;"> AED</span></span>
+          </button>
+          <button type="button" onclick="selectEmiratesRoom(1)" data-ec="1" data-ec-active="false"
+            style="width:100%; background:none; border:none; border-bottom:1px solid rgba(184,146,74,0.1); padding:0.6rem 0; display:flex; align-items:baseline; gap:0.6rem; cursor:pointer; text-align:left;" class="coloc-row">
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--white); white-space:nowrap;" data-fr="Master bedroom" data-en="Master bedroom">Master bedroom</span>
+            <span style="font-size:0.63rem; color:var(--text-muted); font-family:'DM Sans',sans-serif;" data-fr="chambre principale" data-en="main bedroom">chambre principale</span>
+            <span style="flex:1; border-bottom:1px dotted rgba(184,146,74,0.25); transform:translateY(-3px);"></span>
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--gold); white-space:nowrap;">6 000<span style="font-size:0.68rem;"> AED</span></span>
+          </button>
+          <button type="button" onclick="selectEmiratesRoom(2)" data-ec="2" data-ec-active="false"
+            style="width:100%; background:none; border:none; border-bottom:1px solid rgba(184,146,74,0.1); padding:0.6rem 0; display:flex; align-items:baseline; gap:0.6rem; cursor:pointer; text-align:left;" class="coloc-row">
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--white); white-space:nowrap;" data-fr="Suite" data-en="Suite">Suite</span>
+            <span style="flex:1; border-bottom:1px dotted rgba(184,146,74,0.25); transform:translateY(-3px);"></span>
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--gold); white-space:nowrap;">7 000<span style="font-size:0.68rem;"> AED</span></span>
+          </button>
+          <button type="button" onclick="selectEmiratesRoom(3)" data-ec="3" data-ec-active="false"
+            style="width:100%; background:none; border:none; border-bottom:1px solid rgba(184,146,74,0.1); padding:0.6rem 0; display:flex; align-items:baseline; gap:0.6rem; cursor:pointer; text-align:left;" class="coloc-row">
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--white); white-space:nowrap;" data-fr="Suite" data-en="Suite">Suite</span>
+            <span style="font-size:0.63rem; color:var(--text-muted); font-family:'DM Sans',sans-serif;" data-fr="2 lits · la plus spacieuse" data-en="2 beds · largest room">2 lits · la plus spacieuse</span>
+            <span style="flex:1; border-bottom:1px dotted rgba(184,146,74,0.25); transform:translateY(-3px);"></span>
+            <span style="font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--gold); white-space:nowrap;">8 000<span style="font-size:0.68rem;"> AED</span></span>
+          </button>
+        </div>
+
+        <a id="ec-wa" href="https://wa.me/971585802766?text=Bonjour%2C%20la%20chambre%20double%20%C3%A0%20Emirates%20Crown%20(6%20000%20AED)%20m%27int%C3%A9resse." style="align-self:flex-start; background:var(--gold); color:var(--navy); padding:0.55rem 1.1rem; font-size:0.66rem; letter-spacing:0.12em; text-transform:uppercase; font-family:'DM Sans',sans-serif; font-weight:500; text-decoration:none; border-radius:2px; display:flex; align-items:center; gap:6px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <span data-fr="Réserver cette chambre" data-en="Enquire about this room">Réserver cette chambre</span>
+        </a>
+      </div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:0.9rem; margin:0 0 1.5rem;">
+      <span style="font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); font-family:'DM Sans',sans-serif; white-space:nowrap;" data-fr="Appartements entiers · visite vidéo" data-en="Full apartments · video tour">Appartements entiers · visite vidéo</span>
+      <span style="flex:1; height:1px; background:rgba(184,146,74,0.18);"></span>
+    </div>
+
     <!-- ===== VISITE VIDÉO — 21ST CENTURY TOWER ===== -->
     <div style="background:var(--navy-mid); border:1px solid rgba(184,146,74,0.2); border-radius:6px; overflow:hidden; margin-bottom:2rem; display:grid; grid-template-columns:auto 1fr;" class="video-feature">
 
@@ -1049,8 +1197,16 @@
           <span style="font-size:0.7rem; color:var(--gold); font-family:'DM Sans',sans-serif; letter-spacing:0.04em;" data-fr="À 10 minutes à pied du campus SKEMA" data-en="10-minute walk from SKEMA campus">À 10 minutes à pied du campus SKEMA</span>
         </div>
 
+        <div style="background:rgba(184,146,74,0.06); border:1px solid rgba(184,146,74,0.18); border-radius:3px; padding:11px 13px; margin-bottom:1.25rem;">
+          <div style="display:flex; align-items:center; gap:7px; margin-bottom:5px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            <span style="font-size:0.7rem; color:var(--gold); font-family:'DM Sans',sans-serif; font-weight:500; letter-spacing:0.04em;" data-fr="Colocation possible" data-en="Flatshare available">Colocation possible</span>
+          </div>
+          <div style="font-size:0.67rem; color:var(--text-muted); font-family:'DM Sans',sans-serif; line-height:1.6;" data-fr="Vous cherchez seul·e ? Nous vous mettons en relation avec d'autres locataires pour partager ce logement et diviser le loyer — soit environ 6 250 AED par personne à 2." data-en="Looking on your own? We connect you with other tenants to share this property and split the rent — around 6 250 AED per person with 2.">Vous cherchez seul·e ? Nous vous mettons en relation avec d'autres locataires pour partager ce logement et diviser le loyer — soit environ 6 250 AED par personne à 2.</div>
+        </div>
         <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.5rem;">
           <span style="font-size:0.65rem; color:var(--gold); background:rgba(184,146,74,0.1); border:1px solid rgba(184,146,74,0.3); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif; font-weight:500;" data-fr="✦ Toutes charges incluses" data-en="✦ All bills included">✦ Toutes charges incluses</span>
+          <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Non mixte" data-en="Single-gender">Non mixte</span>
           <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Eau" data-en="Water">Eau</span>
           <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Électricité" data-en="Electricity">Électricité</span>
           <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Wi-Fi" data-en="Wi-Fi">Wi-Fi</span>
@@ -1117,8 +1273,16 @@
           <span style="font-size:0.7rem; color:var(--gold); font-family:'DM Sans',sans-serif; letter-spacing:0.04em;" data-fr="À 10 minutes à pied du campus SKEMA" data-en="10-minute walk from SKEMA campus">À 10 minutes à pied du campus SKEMA</span>
         </div>
 
+        <div style="background:rgba(184,146,74,0.06); border:1px solid rgba(184,146,74,0.18); border-radius:3px; padding:11px 13px; margin-bottom:1.25rem;">
+          <div style="display:flex; align-items:center; gap:7px; margin-bottom:5px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            <span style="font-size:0.7rem; color:var(--gold); font-family:'DM Sans',sans-serif; font-weight:500; letter-spacing:0.04em;" data-fr="Colocation possible" data-en="Flatshare available">Colocation possible</span>
+          </div>
+          <div style="font-size:0.67rem; color:var(--text-muted); font-family:'DM Sans',sans-serif; line-height:1.6;" data-fr="Vous cherchez seul·e ? Nous vous mettons en relation avec d'autres locataires pour partager ce logement et diviser le loyer — soit environ 5 670 AED par personne à 3." data-en="Looking on your own? We connect you with other tenants to share this property and split the rent — around 5 670 AED per person with 3.">Vous cherchez seul·e ? Nous vous mettons en relation avec d'autres locataires pour partager ce logement et diviser le loyer — soit environ 5 670 AED par personne à 3.</div>
+        </div>
         <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.5rem;">
           <span style="font-size:0.65rem; color:var(--gold); background:rgba(184,146,74,0.1); border:1px solid rgba(184,146,74,0.3); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif; font-weight:500;" data-fr="✦ Toutes charges incluses" data-en="✦ All bills included">✦ Toutes charges incluses</span>
+          <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Non mixte" data-en="Single-gender">Non mixte</span>
           <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Eau" data-en="Water">Eau</span>
           <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Électricité" data-en="Electricity">Électricité</span>
           <span style="font-size:0.65rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:4px 10px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Wi-Fi" data-en="Wi-Fi">Wi-Fi</span>
@@ -1140,6 +1304,11 @@
           </a>
         </div>
       </div>
+    </div>
+
+    <div style="display:flex; align-items:center; gap:0.9rem; margin:0 0 1.5rem;">
+      <span style="font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); font-family:'DM Sans',sans-serif; white-space:nowrap;" data-fr="Appartements entiers · photos" data-en="Full apartments · photos">Appartements entiers · photos</span>
+      <span style="flex:1; height:1px; background:rgba(184,146,74,0.18);"></span>
     </div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:2rem;">
@@ -1934,6 +2103,94 @@
       v.removeAttribute('controls');
       v.currentTime = 0;
     });
+  })();
+
+  function toggleColocVideo() {
+    const v = document.getElementById('coloc-video');
+    const btn = document.getElementById('coloc-play');
+    if (!v) return;
+    if (v.paused) {
+      v.play();
+      v.setAttribute('controls', '');
+      btn.style.opacity = '0';
+      btn.style.pointerEvents = 'none';
+    } else {
+      v.pause();
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+    }
+  }
+
+  // Une seule vidéo à la fois sur toute la page
+  (function () {
+    const ids = ['century-video', 'century3br-video', 'coloc-video', 'ec-video'];
+    ids.forEach(id => {
+      const v = document.getElementById(id);
+      if (!v) return;
+      v.addEventListener('play', () => {
+        ids.filter(o => o !== id).forEach(o => {
+          const other = document.getElementById(o);
+          if (other && !other.paused) other.pause();
+        });
+      });
+    });
+    const v = document.getElementById('coloc-video');
+    const btn = document.getElementById('coloc-play');
+    if (!v || !btn) return;
+    v.addEventListener('pause', () => { btn.style.opacity='1'; btn.style.pointerEvents='auto'; });
+    v.addEventListener('play',  () => { btn.style.opacity='0'; btn.style.pointerEvents='none'; });
+    v.addEventListener('ended', () => { v.removeAttribute('controls'); v.currentTime = 0; });
+  })();
+
+  // ===================== EMIRATES CROWN =====================
+  const ecRooms = [
+    { label:'Chambre double', file:'ch1', wa:'Bonjour%2C%20la%20chambre%20double%20%C3%A0%20Emirates%20Crown%20(6%20000%20AED)%20m%27int%C3%A9resse.' },
+    { label:'Master bedroom', file:'ch2', wa:'Bonjour%2C%20la%20master%20bedroom%20%C3%A0%20Emirates%20Crown%20(6%20000%20AED)%20m%27int%C3%A9resse.' },
+    { label:'Suite',          file:'ch3', wa:'Bonjour%2C%20la%20suite%20%C3%A0%20Emirates%20Crown%20(7%20000%20AED)%20m%27int%C3%A9resse.' },
+    { label:'Suite',          file:'ch4', wa:'Bonjour%2C%20la%20suite%20%C3%A0%20Emirates%20Crown%20(8%20000%20AED)%20m%27int%C3%A9resse.' }
+  ];
+
+  function selectEmiratesRoom(i) {
+    const r = ecRooms[i];
+    const v = document.getElementById('ec-video');
+    const btn = document.getElementById('ec-play');
+    if (!v || !r) return;
+    v.pause();
+    v.removeAttribute('controls');
+    v.src = 'emirates-crown/' + r.file + '.mp4';
+    v.poster = 'emirates-crown/' + r.file + '.jpg';
+    v.load();
+    btn.style.opacity = '1';
+    btn.style.pointerEvents = 'auto';
+    document.getElementById('ec-label').textContent = r.label;
+    document.getElementById('ec-wa').href = 'https://wa.me/971585802766?text=' + r.wa;
+    document.querySelectorAll('[data-ec]').forEach(el => {
+      const on = Number(el.dataset.ec) === i;
+      el.dataset.ecActive = on ? 'true' : 'false';
+      const first = el.querySelector('span');
+      if (first) first.style.color = on ? 'var(--gold)' : 'var(--white)';
+    });
+  }
+
+  function toggleEcVideo() {
+    const v = document.getElementById('ec-video');
+    const btn = document.getElementById('ec-play');
+    if (!v) return;
+    if (v.paused) {
+      v.play(); v.setAttribute('controls','');
+      btn.style.opacity='0'; btn.style.pointerEvents='none';
+    } else {
+      v.pause(); btn.style.opacity='1'; btn.style.pointerEvents='auto';
+    }
+  }
+
+  (function () {
+    const v = document.getElementById('ec-video');
+    const btn = document.getElementById('ec-play');
+    if (!v || !btn) return;
+    v.addEventListener('pause', () => { btn.style.opacity='1'; btn.style.pointerEvents='auto'; });
+    v.addEventListener('play',  () => { btn.style.opacity='0'; btn.style.pointerEvents='none'; });
+    v.addEventListener('ended', () => { v.removeAttribute('controls'); v.currentTime = 0; });
   })();
 
   // ===================== LIGHTBOX =====================
