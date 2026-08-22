@@ -625,12 +625,12 @@
   .coloc-row:hover { padding-left: 6px; }
   .coloc-row:hover span:first-child { color: var(--gold) !important; }
 
-  #century-play:hover, #century3br-play:hover, #coloc-play:hover, #ec-play:hover {
+  #century-play:hover, #century3br-play:hover, #coloc-play:hover, #ec-play:hover, #urban-play:hover {
     background: rgba(184,146,74,0.9) !important;
     border-color: var(--gold) !important;
     transform: scale(1.08);
   }
-  #century-play:hover svg, #century3br-play:hover svg, #coloc-play:hover svg, #ec-play:hover svg { fill: var(--navy); }
+  #century-play:hover svg, #century3br-play:hover svg, #coloc-play:hover svg, #ec-play:hover svg, #urban-play:hover svg { fill: var(--navy); }
 
   @media (max-width: 900px) {
     .video-feature { grid-template-columns: 1fr !important; }
@@ -1057,12 +1057,14 @@
         </div>
 
         <div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:1.1rem;">
+          <span style="font-size:0.63rem; color:var(--gold); background:rgba(184,146,74,0.1); border:1px solid rgba(184,146,74,0.3); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif; font-weight:500;" data-fr="✦ Toutes charges incluses" data-en="✦ All bills included">✦ Toutes charges incluses</span>
           <span style="font-size:0.63rem; color:var(--gold); background:rgba(184,146,74,0.1); border:1px solid rgba(184,146,74,0.3); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif; font-weight:500;" data-fr="✦ 3 min du métro DMCC" data-en="✦ 3 min from DMCC metro">✦ 3 min du métro DMCC</span>
           <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Non mixte" data-en="Single-gender">Non mixte</span>
           <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Meublé" data-en="Furnished">Meublé</span>
           <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Clim centrale" data-en="Central A/C">Clim centrale</span>
         </div>
 
+        <div style="font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-muted); font-family:'DM Sans',sans-serif; margin-bottom:0.3rem;" data-fr="Prix par personne · charges incluses" data-en="Price per person · bills included">Prix par personne · charges incluses</div>
         <div style="border-top:1px solid rgba(184,146,74,0.1); padding-top:0.5rem;">
           <a href="https://wa.me/971585802766?text=Bonjour%2C%20la%20chambre%20simple%20en%20colocation%20DMCC%20(3%20500%20AED)%20m%27int%C3%A9resse." style="display:flex; align-items:baseline; gap:0.6rem; padding:0.6rem 0; border-bottom:1px solid rgba(184,146,74,0.1); text-decoration:none;" class="coloc-row">
             <span style="font-family:'Cormorant Garamond',serif; font-size:1rem; color:var(--white); white-space:nowrap;" data-fr="Simple" data-en="Single">Simple</span>
@@ -1145,7 +1147,7 @@
           <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Clim centrale" data-en="Central A/C">Clim centrale</span>
         </div>
 
-        <div style="font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-muted); font-family:'DM Sans',sans-serif; margin-bottom:0.3rem;" data-fr="Cliquez une chambre pour voir sa vidéo" data-en="Click a room to see its video">Cliquez une chambre pour voir sa vidéo</div>
+        <div style="font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-muted); font-family:'DM Sans',sans-serif; margin-bottom:0.3rem;" data-fr="Prix par personne · charges incluses — cliquez pour voir la vidéo" data-en="Price per person · bills included — click to see the video">Prix par personne · charges incluses — cliquez pour voir la vidéo</div>
         <div style="border-top:1px solid rgba(184,146,74,0.1); padding-top:0.3rem; margin-bottom:1rem;">
           <button type="button" onclick="selectEmiratesRoom(0)" data-ec="0" data-ec-active="true"
             style="width:100%; background:none; border:none; border-bottom:1px solid rgba(184,146,74,0.1); padding:0.6rem 0; display:flex; align-items:baseline; gap:0.6rem; cursor:pointer; text-align:left;" class="coloc-row">
@@ -1186,6 +1188,70 @@
     <div style="display:flex; align-items:center; gap:0.9rem; margin:0 0 1.5rem;">
       <span style="font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); font-family:'DM Sans',sans-serif; white-space:nowrap;" data-fr="Appartements entiers · visite vidéo" data-en="Full apartments · video tour">Appartements entiers · visite vidéo</span>
       <span style="flex:1; height:1px; background:rgba(184,146,74,0.18);"></span>
+    </div>
+
+    <!-- ===== URBAN OASIS — STUDIO ===== -->
+    <div style="background:var(--navy-mid); border:1px solid rgba(184,146,74,0.2); border-radius:6px; overflow:hidden; margin-bottom:2rem; display:grid; grid-template-columns:380px 1fr;" class="video-feature coloc-feature">
+
+      <div style="position:relative; background:var(--navy); aspect-ratio:16/9; align-self:center; overflow:hidden;">
+        <video id="urban-video" src="urban-oasis/visite.mp4" poster="urban-oasis/poster.jpg" playsinline preload="metadata"
+          style="width:100%; height:100%; object-fit:cover; display:block; cursor:pointer;" onclick="toggleUrbanVideo()"></video>
+
+        <button onclick="event.stopPropagation(); goFullscreen('urban-video')" aria-label="Plein écran"
+          style="position:absolute; top:10px; right:10px; background:rgba(12,11,9,0.7);
+                 border:1px solid rgba(184,146,74,0.35); color:var(--gold); width:28px; height:28px;
+                 border-radius:2px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+                 padding:0; transition:all 0.2s ease;" class="fs-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M16 21h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+        </button>
+
+        <button id="urban-play" onclick="toggleUrbanVideo()" aria-label="Lire la vidéo"
+          style="position:absolute; inset:0; margin:auto; width:54px; height:54px; border-radius:50%;
+                 background:rgba(12,11,9,0.55); border:1px solid rgba(184,146,74,0.5); backdrop-filter:blur(4px);
+                 cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.25s ease;">
+          <svg width="17" height="19" viewBox="0 0 20 22" fill="var(--gold)"><path d="M0 0 L20 11 L0 22 Z"/></svg>
+        </button>
+
+        <div style="position:absolute; top:10px; left:10px; background:rgba(12,11,9,0.7); color:var(--gold);
+                    font-size:0.58rem; letter-spacing:0.15em; font-family:'DM Sans',sans-serif; padding:3px 9px;
+                    border-radius:2px; text-transform:uppercase;" data-fr="Visite vidéo" data-en="Video tour">Visite vidéo</div>
+      </div>
+
+      <div style="padding:1.6rem 1.75rem; display:flex; flex-direction:column; justify-content:center;">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; margin-bottom:0.9rem;">
+          <div>
+            <div style="font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:5px;" data-fr="Studio · Dubaï" data-en="Studio · Dubai">Studio · Dubaï</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--white); line-height:1.2;">Urban <em style="color:var(--gold);">Oasis</em></div>
+          </div>
+          <div style="background:rgba(76,175,125,0.15); border:1px solid rgba(76,175,125,0.4); border-radius:2px; padding:3px 10px; font-size:0.62rem; letter-spacing:0.1em; color:#4caf7d; font-family:'DM Sans',sans-serif; white-space:nowrap;" data-fr="DISPONIBLE" data-en="AVAILABLE">DISPONIBLE</div>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:1.1rem;">
+          <span style="font-size:0.63rem; color:var(--gold); background:rgba(184,146,74,0.1); border:1px solid rgba(184,146,74,0.3); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif; font-weight:500;" data-fr="✦ Toutes charges incluses" data-en="✦ All bills included">✦ Toutes charges incluses</span>
+          <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Eau" data-en="Water">Eau</span>
+          <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Électricité" data-en="Electricity">Électricité</span>
+          <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Wi-Fi" data-en="Wi-Fi">Wi-Fi</span>
+          <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Salle de sport" data-en="Gym">Salle de sport</span>
+          <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Piscine" data-en="Pool">Piscine</span>
+          <span style="font-size:0.63rem; color:var(--text-muted); background:var(--navy); border:1px solid rgba(184,146,74,0.1); padding:3px 9px; border-radius:2px; font-family:'DM Sans',sans-serif;" data-fr="Meublé" data-en="Furnished">Meublé</span>
+        </div>
+
+        <div style="border-top:1px solid rgba(184,146,74,0.1); padding-top:1.25rem; display:flex; justify-content:space-between; align-items:flex-end; gap:1rem; flex-wrap:wrap;">
+          <div>
+            <div style="font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--text-muted); font-family:'DM Sans',sans-serif; margin-bottom:4px;" data-fr="Loyer mensuel" data-en="Monthly rent">Loyer mensuel</div>
+            <div style="font-family:'Cormorant Garamond',serif; font-size:1.6rem; color:var(--gold);">10 170 <span style="font-size:0.9rem;">AED</span></div>
+            <div style="font-size:0.7rem; color:var(--text-muted); font-family:'DM Sans',sans-serif;" data-fr="soit 61 000 AED / 6 mois · charges incluses" data-en="i.e. 61,000 AED / 6 months · bills included">soit 61 000 AED / 6 mois · charges incluses</div>
+            <div style="font-size:0.68rem; color:var(--text-muted); font-family:'DM Sans',sans-serif; margin-top:3px; display:flex; align-items:center; gap:5px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span data-fr="Dépôt de garantie 1 000 AED — remboursable" data-en="Security deposit 1,000 AED — refundable">Dépôt de garantie 1 000 AED — remboursable</span>
+            </div>
+          </div>
+          <a href="https://wa.me/971585802766?text=Bonjour%2C%20le%20studio%20%C3%A0%20Urban%20Oasis%20(10%20170%20AED)%20m%27int%C3%A9resse." style="background:var(--gold); color:var(--navy); padding:0.6rem 1.2rem; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; font-family:'DM Sans',sans-serif; font-weight:500; text-decoration:none; border-radius:2px; display:flex; align-items:center; gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            <span data-fr="Nous contacter" data-en="Contact us">Nous contacter</span>
+          </a>
+        </div>
+      </div>
     </div>
 
     <!-- ===== VISITE VIDÉO — 21ST CENTURY TOWER ===== -->
@@ -2224,7 +2290,7 @@
 
   // Une seule vidéo à la fois sur toute la page
   (function () {
-    const ids = ['century-video', 'century3br-video', 'coloc-video', 'ec-video'];
+    const ids = ['century-video', 'century3br-video', 'coloc-video', 'ec-video', 'urban-video'];
     ids.forEach(id => {
       const v = document.getElementById(id);
       if (!v) return;
@@ -2237,6 +2303,28 @@
     });
     const v = document.getElementById('coloc-video');
     const btn = document.getElementById('coloc-play');
+    if (!v || !btn) return;
+    v.addEventListener('pause', () => { btn.style.opacity='1'; btn.style.pointerEvents='auto'; });
+    v.addEventListener('play',  () => { btn.style.opacity='0'; btn.style.pointerEvents='none'; });
+    v.addEventListener('ended', () => { v.removeAttribute('controls'); v.currentTime = 0; });
+  })();
+
+  // ===================== URBAN OASIS =====================
+  function toggleUrbanVideo() {
+    const v = document.getElementById('urban-video');
+    const btn = document.getElementById('urban-play');
+    if (!v) return;
+    if (v.paused) {
+      v.play(); v.setAttribute('controls','');
+      btn.style.opacity='0'; btn.style.pointerEvents='none';
+    } else {
+      v.pause(); btn.style.opacity='1'; btn.style.pointerEvents='auto';
+    }
+  }
+
+  (function () {
+    const v = document.getElementById('urban-video');
+    const btn = document.getElementById('urban-play');
     if (!v || !btn) return;
     v.addEventListener('pause', () => { btn.style.opacity='1'; btn.style.pointerEvents='auto'; });
     v.addEventListener('play',  () => { btn.style.opacity='0'; btn.style.pointerEvents='none'; });
