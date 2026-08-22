@@ -691,7 +691,7 @@
   <a href="#process" onclick="closeMobileMenu()" data-fr="Notre processus" data-en="Our Process">Notre processus</a>
   <a href="#logements" onclick="closeMobileMenu()" data-fr="Logements" data-en="Housing">Logements</a>
   <a href="#catalogue" onclick="closeMobileMenu()" data-fr="Catalogue" data-en="Catalogue">Catalogue</a>
-  <a href="#pourquoi" onclick="closeMobileMenu()" data-fr="Pourquoi nous" data-en="Why us">Pourquoi nous</a>
+  <a href="#pourquoi" onclick="closeMobileMenu()" data-fr="Pourquoi nous" data-en="Why Aura">Pourquoi nous</a>
   <a href="#temoignages" onclick="closeMobileMenu()" data-fr="Témoignages" data-en="Testimonials">Témoignages</a>
   <a href="#contact" onclick="closeMobileMenu()" data-fr="Contact" data-en="Contact">Contact</a>
   <button class="lang-toggle" onclick="toggleLang(); closeMobileMenu();" style="font-size:1rem; padding: 0.6rem 1.5rem;" id="mobileLangBtn">EN</button>
@@ -704,7 +704,7 @@
     <li><a href="#process" data-fr="Notre processus" data-en="Our Process">Notre processus</a></li>
     <li><a href="#logements" data-fr="Logements" data-en="Housing">Logements</a></li>
     <li><a href="#catalogue" data-fr="Catalogue" data-en="Catalogue">Catalogue</a></li>
-    <li><a href="#pourquoi" data-fr="Pourquoi nous" data-en="Why us">Pourquoi nous</a></li>
+    <li><a href="#pourquoi" data-fr="Pourquoi nous" data-en="Why Aura">Pourquoi nous</a></li>
     <li><a href="#temoignages" data-fr="Témoignages" data-en="Testimonials">Témoignages</a></li>
     <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
   </ul>
@@ -1652,7 +1652,7 @@
   <div class="container">
     <div class="why-grid">
       <div class="why-left reveal">
-        <div class="tag" style="border-color: rgba(201,168,76,0.5);" data-fr="Pourquoi nous choisir" data-en="Why choose us">Pourquoi nous choisir</div>
+        <div class="tag" style="border-color: rgba(201,168,76,0.5);" data-fr="Pourquoi nous choisir" data-en="The Aura difference">Pourquoi nous choisir</div>
         <h2><span data-fr="Votre allié de confiance,<br>où que vous soyez,<br>pour <em style='color:var(--gold);font-style:italic'>Dubaï</em>" data-en="Your trusted partner,<br>wherever you are,<br>for <em style='color:var(--gold);font-style:italic'>Dubai</em>">Votre allié de confiance,<br>où que vous soyez,<br>pour <em style="color:var(--gold);font-style:italic">Dubaï</em></span></h2>
         <p data-fr="Aura Dubai Properties est né d'un constat simple : trouver un logement à distance dans une ville que l'on ne connaît pas peut être complexe et stressant. Notre mission est d'accompagner les étudiants, les expatriés et leurs familles pour trouver la solution de logement la plus adaptée à leur profil, leur budget et leur mode de vie." data-en="Aura Dubai Properties was born from a simple observation: finding housing remotely in a city you don't know can be complex and stressful. Our mission is to support students, expats and their families in finding the housing solution best suited to their profile, budget and lifestyle.">Aura Dubai Properties est né d'un constat simple : trouver un logement à distance dans une ville que l'on ne connaît pas peut être complexe et stressant. Notre mission est d'accompagner les étudiants, les expatriés et leurs familles pour trouver la solution de logement la plus adaptée à leur profil, leur budget et leur mode de vie.</p>
         <div class="why-features">
@@ -1968,8 +1968,57 @@
   // ===================== LANGUAGE TOGGLE =====================
   let currentLang = 'fr';
 
+  // Détection auto de la langue au 1er chargement, choix manuel prioritaire ensuite
+  function detectLang() {
+    try {
+      const saved = localStorage.getItem('auraLang');
+      if (saved === 'fr' || saved === 'en') return saved;
+    } catch (e) { /* mode privé : on ignore */ }
+    const nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'fr';
+    return nav.toLowerCase().startsWith('fr') ? 'fr' : 'en';
+  }
+
+  function applyLang(lang) {
+    currentLang = lang;
+    const btn = document.getElementById('langBtn');
+    const mbtn = document.getElementById('mobileLangBtn');
+    if (btn)  btn.textContent  = lang === 'fr' ? 'EN' : 'FR';
+    if (mbtn) mbtn.textContent = lang === 'fr' ? 'EN' : 'FR';
+    document.documentElement.lang = lang;
+
+    document.querySelectorAll('[data-fr]').forEach(el => {
+      const text = el.getAttribute('data-' + lang);
+      if (text) {
+        if (text.includes('<')) el.innerHTML = text;
+        else el.textContent = text;
+      }
+    });
+
+    const heroH1Span = document.querySelector('#hero h1 span');
+    if (heroH1Span) {
+      const txt = heroH1Span.getAttribute('data-' + lang);
+      if (txt) heroH1Span.innerHTML = txt;
+    }
+
+    document.querySelectorAll('select option[data-fr]').forEach(opt => {
+      const t = opt.getAttribute('data-' + lang);
+      if (t) opt.textContent = t;
+    });
+
+    document.querySelectorAll('[data-fr-placeholder]').forEach(el => {
+      const t = el.getAttribute(lang === 'fr' ? 'data-fr-placeholder' : 'data-en-placeholder');
+      if (t) el.placeholder = t;
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const lang = detectLang();
+    if (lang !== 'fr') applyLang(lang);
+  });
+
   function toggleLang() {
     currentLang = currentLang === 'fr' ? 'en' : 'fr';
+    try { localStorage.setItem('auraLang', currentLang); } catch (e) {}
     document.getElementById('langBtn').textContent = currentLang === 'fr' ? 'EN' : 'FR';
     document.getElementById('mobileLangBtn').textContent = currentLang === 'fr' ? 'EN' : 'FR';
     document.documentElement.lang = currentLang;
