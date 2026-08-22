@@ -617,6 +617,8 @@
     .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
   }
 
+  .fs-btn:hover { background: var(--gold) !important; color: var(--navy) !important; border-color: var(--gold) !important; }
+
   .ec-arrow:hover { background: var(--gold) !important; color: var(--navy) !important; border-color: var(--gold) !important; }
 
   .coloc-row { transition: padding-left 0.2s ease; }
@@ -1024,6 +1026,14 @@
         <video id="coloc-video" src="coloc-jlt/visite.mp4" poster="coloc-jlt/poster.jpg" playsinline preload="metadata"
           style="width:100%; height:100%; object-fit:cover; display:block; cursor:pointer;" onclick="toggleColocVideo()"></video>
 
+                <button onclick="event.stopPropagation(); goFullscreen('coloc-video')" aria-label="Plein écran"
+          style="position:absolute; bottom:10px; left:10px; background:rgba(12,11,9,0.7);
+                 border:1px solid rgba(184,146,74,0.35); color:var(--gold); width:28px; height:28px;
+                 border-radius:2px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+                 padding:0; transition:all 0.2s ease;" class="fs-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M16 21h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+        </button>
+
         <button id="coloc-play" onclick="toggleColocVideo()" aria-label="Lire la vidéo"
           style="position:absolute; inset:0; margin:auto; width:54px; height:54px; border-radius:50%;
                  background:rgba(12,11,9,0.55); border:1px solid rgba(184,146,74,0.5); backdrop-filter:blur(4px);
@@ -1082,6 +1092,14 @@
       <div style="position:relative; background:var(--navy); aspect-ratio:16/9; align-self:center; overflow:hidden;">
         <video id="ec-video" src="emirates-crown/ch1.mp4" poster="emirates-crown/ch1.jpg" playsinline preload="metadata"
           style="width:100%; height:100%; object-fit:cover; display:block; cursor:pointer;" onclick="toggleEcVideo()"></video>
+
+                <button onclick="event.stopPropagation(); goFullscreen('ec-video')" aria-label="Plein écran"
+          style="position:absolute; bottom:10px; left:10px; background:rgba(12,11,9,0.7);
+                 border:1px solid rgba(184,146,74,0.35); color:var(--gold); width:28px; height:28px;
+                 border-radius:2px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+                 padding:0; transition:all 0.2s ease;" class="fs-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M16 21h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+        </button>
 
         <button id="ec-play" onclick="toggleEcVideo()" aria-label="Lire la vidéo"
           style="position:absolute; inset:0; margin:auto; width:54px; height:54px; border-radius:50%;
@@ -1186,6 +1204,14 @@
         ></video>
 
         <!-- Bouton play overlay -->
+                <button onclick="event.stopPropagation(); goFullscreen('century-video')" aria-label="Plein écran"
+          style="position:absolute; bottom:10px; left:10px; background:rgba(12,11,9,0.7);
+                 border:1px solid rgba(184,146,74,0.35); color:var(--gold); width:28px; height:28px;
+                 border-radius:2px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+                 padding:0; transition:all 0.2s ease;" class="fs-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M16 21h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+        </button>
+
         <button id="century-play" onclick="toggleCenturyVideo()" aria-label="Lire la vidéo"
           style="position:absolute; inset:0; margin:auto; width:64px; height:64px; border-radius:50%;
                  background:rgba(12,11,9,0.55); border:1px solid rgba(184,146,74,0.5); backdrop-filter:blur(4px);
@@ -1262,6 +1288,14 @@
           style="width:100%; height:100%; object-fit:cover; display:block; cursor:pointer;"
           onclick="toggleCentury3brVideo()"
         ></video>
+
+                <button onclick="event.stopPropagation(); goFullscreen('century3br-video')" aria-label="Plein écran"
+          style="position:absolute; bottom:10px; left:10px; background:rgba(12,11,9,0.7);
+                 border:1px solid rgba(184,146,74,0.35); color:var(--gold); width:28px; height:28px;
+                 border-radius:2px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+                 padding:0; transition:all 0.2s ease;" class="fs-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M16 21h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+        </button>
 
         <button id="century3br-play" onclick="toggleCentury3brVideo()" aria-label="Lire la vidéo"
           style="position:absolute; inset:0; margin:auto; width:64px; height:64px; border-radius:50%;
@@ -2159,6 +2193,18 @@
     v.addEventListener('play',  () => { btn.style.opacity='0'; btn.style.pointerEvents='none'; });
     v.addEventListener('ended', () => { v.removeAttribute('controls'); v.currentTime = 0; });
   })();
+
+  // ===================== PLEIN ÉCRAN =====================
+  function goFullscreen(videoId) {
+    const v = document.getElementById(videoId);
+    if (!v) return;
+    v.setAttribute('controls', '');
+    if (v.requestFullscreen)            v.requestFullscreen();
+    else if (v.webkitRequestFullscreen) v.webkitRequestFullscreen();       // Safari desktop
+    else if (v.webkitEnterFullscreen)   v.webkitEnterFullscreen();         // iPhone
+    else if (v.msRequestFullscreen)     v.msRequestFullscreen();
+    v.play();
+  }
 
   // ===================== EMIRATES CROWN =====================
   const ecRooms = [
